@@ -115,6 +115,9 @@
 			if($('[data-ob="' + openedby +'"]').length !== 0){
 				$('[data-ob="' + openedby +'"]').removeClass('off').addClass('on');
 			}
+			if($('[data-obu="' + openedby +'"]').length !== 0){
+				$('[data-obu="' + openedby +'"]').removeClass('off').addClass('on');
+			}
 			if($('[data-obi="' + openedby +'"]').length !== 0){
 				$('[data-obi="' + openedby +'"]').removeClass('off').addClass('on');
 				$("html, body").animate(

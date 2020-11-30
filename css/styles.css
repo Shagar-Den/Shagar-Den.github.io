@@ -184,9 +184,9 @@ p {
   flex-wrap: wrap;*/
 }
 
-.boxDarkMode > span {
+/*.boxDarkMode > span {
   display:flex;
-}
+}*/
 
 @media (max-width: 387px) {
   .boxDarkMode{
