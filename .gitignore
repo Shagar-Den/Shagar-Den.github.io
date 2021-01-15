@@ -1,1 +1,2 @@
-//empty for now but you never know when you will need one...
+//Do not commit binaries into the project outside release.
+apps/
