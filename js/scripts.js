@@ -166,7 +166,11 @@
 			var target = $(this.hash);
 			target.show();
 		});
-		$('.hover_bkgr_fricc').click(function(){
+		$('.hover_bkgr_fricc').click(function(e){
+			var tar = e.target;
+			//console.log(tar.className);
+			//console.log($(tar).parent().prop('className'));
+			if((tar.className == "popup-header")||(tar.className == "popup-body")||($(tar).parent().prop('className') == "popup-header")||($(tar).parent().prop('className') == "popup-body")) return;
 			$('.hover_bkgr_fricc').hide();
 		});
 		$('.popupCloseButton').click(function(){

@@ -10584,7 +10584,7 @@ tdesactivated{
     text-align:center;
     top:0;
     width:100%;
-    z-index:3;
+    z-index: 3;
 	overflow-y: auto;
 }
 
@@ -10604,14 +10604,35 @@ tdesactivated{
     width: 60%;
     position: relative;
     border-radius: 8px;
-    padding: 15px 5%;
+	cursor:default;
 }
 
 .hover_bkgr_fricc > .dark{ 
     background-color: #222; 
     color: #e6e6e6; 
 } 
-.popupCloseButton {
+
+/* Popup Header */
+.popup-header {
+  padding: 16px 16px;
+  background-color: #343a40;
+  color: #fff;
+  border-radius: 8px 8px 0px 0px;
+  /*padding: 15px 5%;*/
+}
+
+.popup-header:hover {
+  color: #d85720;
+}
+
+/* Popup Body */
+
+.popup-body {
+  padding: 15px 5%;
+}
+
+
+/*.popupCloseButton {
     background-color: #fff;
     border: 3px solid #999;
     border-radius: 50px;
@@ -10630,7 +10651,7 @@ tdesactivated{
 }
 .popupCloseButton:hover {
     background-color: #ccc;
-}
+}*/
 .trigger_popup_fricc {
     cursor: pointer;
 }
@@ -10649,7 +10670,7 @@ tdesactivated{
   color: #d85720;
 }
 
-/* Popup box END */
+/* --------------------------------------Popup box END------------------------------- */
 
 #visitorProgress {
   width: 100%;
