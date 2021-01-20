@@ -158,11 +158,19 @@
 	  
 	  //The following is to make popup windows when click on projects to see details and download
 		
-		$(".trigger_popup_fricc").click(function(){
+		$(".trigger_popup_fricc").click(function(e){
+			
+			//this line just stops it visiting the href which is always #
+			e.preventDefault();
+			
 			var target = $(this.hash);
 			target.show();
 		});
-		$(".trigger_popup_text").click(function(){
+		$(".trigger_popup_text").click(function(e){
+			
+			//this line just stops it visiting the href which is always #
+			e.preventDefault();
+			
 			var target = $(this.hash);
 			target.show();
 		});
