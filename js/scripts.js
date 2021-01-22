@@ -99,12 +99,17 @@
             );
         }
     }
-	
+    
+    
+    var hasSeenTrick = true;
+    var startHint = false;
+    var firstTime = true;
+
 	//this is the bit of code that makes the whole opening and closing text thing work.
 	  $('t[data-o]').click(function(e) {
 
 		//this line just stops it visiting the href which is always #
-		e.preventDefault();
+        e.preventDefault();
 		
 		if($(this).attr('class') == "on"){
 			var openedby = $(this).attr('data-o');
@@ -127,6 +132,12 @@
 					1000,
 					"easeInOutExpo"
 				);
+            }
+            if($('[id="' +openedby +'-hint"]').length !== 0){
+                $('[id="' +openedby +'-hint"]').removeClass('on').addClass('off');
+                hasSeenTrick = true;
+                startHint = false;
+                firstTime = false;
 			}
 			
 			
@@ -138,7 +149,35 @@
 		}
 		
 
-	  });
+      });
+
+    setInterval(function () {
+        if (hasSeenTrick==true && firstTime)
+            hasSeenTrick=false;
+        else if(startHint == false && firstTime)
+            startHint=true;
+    }, 3000);
+
+    var fadin = false;
+    setInterval(function () {
+        if (startHint){
+            if(firstTime){
+                $('#first-hint').removeClass('off').addClass('on');
+                firstTime = false;
+            }
+            if(!fadin){
+                fadin = true;
+                $("#first-hint").removeClass('fadeout').addClass('fadein');
+            }
+            else{
+                fadin = false;
+                $("#first-hint").removeClass('fadein').addClass('fadeout');
+            }
+        }
+            
+    }, 5000);
+
+
 	  
 	  //Show everything, for people that do not have time
 	  $('.show_all').click(function() {
