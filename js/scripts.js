@@ -156,7 +156,7 @@
             hasSeenTrick=false;
         else if(startHint == false && firstTime)
             startHint=true;
-    }, 3000);
+    }, 1000);
 
     var fadin = false;
     setInterval(function () {
