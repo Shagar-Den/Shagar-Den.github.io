@@ -236,6 +236,11 @@
             } else { 
                 $( ".hover_bkgr_fricc > div" ).addClass( "dark" );  
             }
+            if( $( ".pic" ).hasClass( "dark" )) { 
+                $( ".pic" ).removeClass( "dark" ); 
+            } else { 
+                $( ".pic" ).addClass( "dark" );  
+            }
 			if($("#UnityImg").attr('src')=="assets/img/logos/unity-mwu-black.png"){
 				$("#UnityImg").attr("src", 'assets/img/logos/unity-mwu-white.png');
 			} else{
@@ -273,7 +278,3 @@ function move(percent) {
     elem.style.width = width + "%";
     elem.innerHTML = width + "%";
 }
-
-
-
-
