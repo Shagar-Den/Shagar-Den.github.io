@@ -152,6 +152,7 @@ padding: 16px 16px;
 background-color: #343a40;
 color: #fff;
 border-radius: 8px 8px 0px 0px;
+font-size: 1.5rem;
 /*padding: 15px 5%;*/
 }
 
@@ -163,6 +164,13 @@ color: #d85720;
 
 .popup-body {
 padding: 15px 5%;
+}
+
+.popup-link{
+color: #d85720;
+font-size: 1.25rem;
+font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+font-weight: 700;
 }
 
 /* --------------------------------------Popup box END------------------------------- */
