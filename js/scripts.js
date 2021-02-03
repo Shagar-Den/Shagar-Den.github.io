@@ -41,65 +41,6 @@
         target: "#mainNav",
         offset: 74,
     });
-
-    var boxIsSticky = false;
-    var stickyBox = function () {
-        var $socialBox = $("#socialBox");
-        var scrollTop = $("html, body").scrollTop();
-
-        var targetBottomPos = $(window).height() - $socialBox.height() - 50;
-        var targetTopPos = $('.masthead').outerHeight() - $socialBox.outerHeight() - 20;
-
-        if (boxIsSticky === false && scrollTop > 100) {
-            boxIsSticky = true;
-            $socialBox.stop().animate(
-                {
-                    top: targetBottomPos,
-                },
-                1000,
-                "easeOutExpo"
-            );
-        } else if (boxIsSticky === true && scrollTop < 100) {
-            boxIsSticky = false;
-            $socialBox.stop().animate(
-                {
-                    top: targetTopPos
-                },
-                1000,
-                "easeOutExpo"
-            );
-        }
-    }
-
-    // Collapse Navbar
-    var navbarCollapse = function () {
-        if ($("#mainNav").offset().top > 100) {
-            $("#mainNav").addClass("navbar-shrink");
-        } else {
-            $("#mainNav").removeClass("navbar-shrink");
-        }
-    };
-    // Collapse now if page is not at top
-    navbarCollapse();
-    stickyBox();
-    // Collapse the navbar when page is scrolled
-    $(window).scroll(navbarCollapse);
-    $(window).scroll(stickyBox);
-    window.onresize = function() {
-        var scrollTop = $("html, body").scrollTop();
-        if (scrollTop < 100) {
-            var $socialBox = $("#socialBox");
-            var targetTopPos = $('.masthead').outerHeight() - $socialBox.outerHeight() - 20;
-            $socialBox.stop().animate(
-                {
-                    top: targetTopPos
-                },
-                1000,
-                "easeOutExpo"
-            );
-        }
-    }
-    
     
     var hasSeenTrick = true;
     var startHint = false;
@@ -197,7 +138,7 @@
 	  
 	  //The following is to make popup windows when click on projects to see details and download
 		
-		$(".trigger_popup_fricc").click(function(e){
+		$(".trigger_popup").click(function(e){
 			
 			//this line just stops it visiting the href which is always #
 			e.preventDefault();
@@ -213,15 +154,14 @@
 			var target = $(this.hash);
 			target.show();
 		});
-		$('.hover_bkgr_fricc').click(function(e){
-			var tar = e.target;
-			//console.log(tar.className);
-			//console.log($(tar).parent().prop('className'));
+		$('.popup').click(function(e){
+            var tar = e.target;
+            
 			if((tar.className == "popup-header")||(tar.className == "popup-body")||($(tar).parent().prop('className') == "popup-header")||($(tar).parent().prop('className') == "popup-body")) return;
-			$('.hover_bkgr_fricc').hide();
+			$('.popup').hide();
 		});
 		$('.popupCloseButton').click(function(){
-			$('.hover_bkgr_fricc').hide();
+			$('.popup').hide();
 		});
 		
 		//The following is to apply the dark mode on click
@@ -231,17 +171,17 @@
             } else { 
                 $( "body" ).addClass( "dark" ); 
             }
-			if( $( ".hover_bkgr_fricc > div" ).hasClass( "dark" )) { 
-                $( ".hover_bkgr_fricc > div" ).removeClass( "dark" ); 
+			if( $( ".popup > div" ).hasClass( "dark" )) { 
+                $( ".popup > div" ).removeClass( "dark" ); 
             } else { 
-                $( ".hover_bkgr_fricc > div" ).addClass( "dark" );  
+                $( ".popup > div" ).addClass( "dark" );  
             }
 			if($("#UnityImg").attr('src')=="assets/img/logos/unity-mwu-black.png"){
 				$("#UnityImg").attr("src", 'assets/img/logos/unity-mwu-white.png');
 			} else{
 				$("#UnityImg").attr("src", "assets/img/logos/unity-mwu-black.png");
 			}
-        }); 
+        });
 		
 		var progressI = 1;
 		var totalDiscover = $('t[data-o]').length + 1;
