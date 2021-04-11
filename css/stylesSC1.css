@@ -1,0 +1,11 @@
+body {margin: 0;}
+
+
+.title{
+	text-align: center;
+	background-color: 111111;
+	color: eeeeee;
+	width: 100%;
+	font-family: 'PT Serif', serif;
+	font-size: 32px;
+}
