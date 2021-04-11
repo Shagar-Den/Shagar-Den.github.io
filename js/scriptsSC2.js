@@ -1,12 +1,18 @@
 
 
-
+const terrain = document.getElementById('area');
 const player = document.getElementById('player');
+const ball = document.getElementById('ball');
 player.posX = 0;
 player.posY = 0;
 player.speed = 30;
 
-const timerInterval = 100, borderX = 1000;// borderY = 100;
+ball.posX = 0;
+ball.posY = 0;
+ball.speed = 20;
+ball.angle = Math.random * 360;
+
+const timerInterval = 110, borderX = 500;// borderY = 100;
 const keys = [37, 39];
 var key = 0, timerId = 0;
 
@@ -69,3 +75,25 @@ function moveObject() {
     }
     player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 }
+
+function update(progress) {
+	
+	
+	
+	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
+}
+
+
+function loop(timestamp) {
+  var progress = timestamp - lastRender
+
+  update(progress)
+
+  lastRender = timestamp
+  window.requestAnimationFrame(loop)
+}
+var lastRender = 0
+window.requestAnimationFrame(loop)
+
+
+
