@@ -20,6 +20,8 @@ body {
 	background-color: eeeeee;
 	margin: auto;
 	border-color: 111111;
+	min-width: 200px;
+	min-height: 200px;
 }
 
 .player-box{
@@ -41,4 +43,11 @@ body {
 	background-color: 111111;
 	position: absolute;
 	transition: transform 10ms linear;
+}
+
+.brick{
+	width: 75px;
+	height: 20px;
+	background-color: 222222;
+	position: absolute;
 }
