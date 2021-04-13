@@ -14,12 +14,14 @@ var borders = terrain.getBoundingClientRect();
 
 player.posX = (borders.right + borders.left - (player.getBoundingClientRect().right + player.getBoundingClientRect().left)) / 2;
 player.posY = borders.bottom - player.getBoundingClientRect().bottom - 50;
+var refPosY = borders.bottom - player.posY;
+var deltaAcceptable = 5;
 player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 player.speed = 5 * w/wRef;
 player.speedGain = 0.5;
 
 ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
-ball.posY = (borders.bottom + borders.top - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
+ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
 ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 ball.speed = 0.1 * w/wRef;
 ball.angle = Math.random() * 2 * Math.PI;
@@ -58,6 +60,7 @@ function addElement (c,r, container,nbColomn) {
     container.appendChild(newDiv);
     newDiv.classList.add('brick');
     newDiv.style.width = `${100/(nbColomn+1)}%`;
+	//newDiv.style.
     //var x = (c*(brickWidth+brickHorizontalPadding))+brickOffsetLeft - ((newDiv.getBoundingClientRect().right + newDiv.getBoundingClientRect().left) / 2) - (r%2 * brickWidth/2);
     //var y = (r*(brickHeight+brickVerticalPadding))+brickOffsetTop -((newDiv.getBoundingClientRect().top + newDiv.getBoundingClientRect().bottom) / 2);
     bricks[bNb] = {active : true};
@@ -75,7 +78,7 @@ function drawBricks() {
     var newDiv = document.createElement("div");
     tableB.appendChild(newDiv);
     newDiv.classList.add('bricks-table-row');
-    newDiv.style.width = r%2 ? '60%' : '80%';
+    newDiv.style.width = '80%';
     newDiv.style.height = `${50/(brickRowCount+1)}%`;
     var nbColomn = r%2 ? brickColumnCount : brickColumnCount+1;
     for(var c=0; c<nbColomn; c++) {
@@ -141,9 +144,9 @@ function movePlayer() {
     horizontalSpeed = 0;
   }
 
-  var deltaP = terrain.getBoundingClientRect().bottom - player.getBoundingClientRect().bottom;
-  if(deltaP > 55 || deltaP < 45){
-    player.posY += deltaP - 50;
+  var deltaP = terrain.getBoundingClientRect().bottom - player.posY;
+  if(deltaP > refPosY+deltaAcceptable || deltaP < refPosY-deltaAcceptable){
+    player.posY += deltaP-refPosY;
   }
 
 

@@ -67,6 +67,7 @@ body {
 .brick{
 	height: 100%;
 	background-color: 222222;
+	margin: auto 0.1%;
 }
 
 .bricks-table{
