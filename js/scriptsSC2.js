@@ -15,15 +15,16 @@ ball.posY = (borders.bottom + borders.top - (ball.getBoundingClientRect().bottom
 ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 ball.speed = 0.1;
 ball.angle = Math.random() * 2 * Math.PI;
-
+ball.vx = ball.speed * Math.cos(ball.angle);
+ball.vy = ball.speed * Math.sin(ball.angle);
 
 var score = 1;
 var horizontalSpeed = 0;
 
 
 
-var brickColumnCount = 4;
-var brickRowCount = 3;
+var brickColumnCount = 14;
+var brickRowCount = 6;
 var brickWidth = 75;
 var brickHeight = 20;
 var brickPadding = 3;
@@ -34,7 +35,7 @@ var bricks = [];
 for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
     for(var r=0; r<brickRowCount; r++) {
-        bricks[c][r] = { x: 0, y: 0, status: 1, element: null };
+        bricks[c][r] = { x: 0, y: 0};
     }
 }
 
@@ -42,7 +43,6 @@ function addElement (c,r) {
   var newDiv = document.createElement("div");
   newDiv.classList.add('brick');
   terrain.appendChild(newDiv);
-  bricks[c][r].element = newDiv;
   bricks[c][r].x -= ((newDiv.getBoundingClientRect().right + newDiv.getBoundingClientRect().left) / 2);
   bricks[c][r].y -= ((newDiv.getBoundingClientRect().top + newDiv.getBoundingClientRect().bottom) / 2);
   newDiv.style.transform = `translate(${bricks[c][r].x}px, ${bricks[c][r].y}px)`;
@@ -52,13 +52,11 @@ function addElement (c,r) {
 function drawBricks() {
   for(var c=0; c<brickColumnCount; c++) {
       for(var r=0; r<brickRowCount; r++) {
-          if(bricks[c][r].status == 1) {
-              var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
-              var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
-              bricks[c][r].x = brickX;
-              bricks[c][r].y = brickY;
-              addElement (c,r);
-          }
+            var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+            var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+            bricks[c][r].x = brickX;
+            bricks[c][r].y = brickY;
+            addElement (c,r);
       }
   }
 }
@@ -144,10 +142,65 @@ function moveObject() {
     player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 }
 
+function touchBrick(){
+	var ballBound = ball.getBoundingClientRect();
+	var bricksElem = document.getElementsByClassName("brick");
+	for (var i = 0, len = bricksElem.length; i < len; i++) {
+		var hasBeenRemoved = false;
+		var brick = bricksElem[i];
+		if(isInsideElement(ballBound.right, ((ballBound.top+ballBound.bottom)/2),brick) && (ball.angle < Math.PI/2 || ball.angle > 3*Math.PI/2)){
+			if(ball.angle < Math.PI/2){
+				ball.angle += 2*((Math.PI/2)-ball.angle);
+			}
+			else{
+				ball.angle += 2*((3*Math.PI/2)-ball.angle);
+			}
+			bricksElem[i].remove();
+			hasBeenRemoved = true;
+			len--;
+		}
+		if(isInsideElement(((ballBound.right+ballBound.left)/2), ballBound.bottom, brick) && ball.angle < Math.PI){
+			console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
+			ball.angle += 2*(Math.PI-ball.angle);
+			if(!hasBeenRemoved){
+				bricksElem[i].remove();
+				hasBeenRemoved = true;
+				len--;
+			}
+		}
+		if(isInsideElement(((ballBound.right+ballBound.left)/2), ballBound.top, brick) && ball.angle > Math.PI){
+			console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
+			ball.angle += 2*(Math.PI-ball.angle);
+			if(!hasBeenRemoved){
+				bricksElem[i].remove();
+				hasBeenRemoved = true;
+				len--;
+			}
+		}
+		if(isInsideElement(ballBound.left, ((ballBound.top+ballBound.bottom)/2), brick) && (ball.angle > Math.PI/2 && ball.angle < 3*Math.PI/2)){
+			console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
+			if(ball.angle < Math.PI){
+				ball.angle += 2*((Math.PI/2)-ball.angle);
+			}
+			else{
+				ball.angle += 2*((3*Math.PI/2)-ball.angle);
+			}
+			if(!hasBeenRemoved){
+				bricksElem[i].remove();
+				hasBeenRemoved = true;
+				len--;
+			}
+		}
+	}	
+}
+
 function isInsidePlayer(pointX,pointY){
-  var playerBound = player.getBoundingClientRect();
-  if(pointY > playerBound.top && pointY < playerBound.bottom && pointX < playerBound.right && pointX > playerBound.left){
-    console.log('Inside player');
+  return isInsideElement(pointX,pointY,player);
+}
+
+function isInsideElement(pointX,pointY,thing){
+  var thingBound = thing.getBoundingClientRect();
+  if(pointY > thingBound.top && pointY < thingBound.bottom && pointX < thingBound.right && pointX > thingBound.left){
     return true;
   }
   else{
@@ -172,46 +225,44 @@ function checkRebound(){
 	var borders = terrain.getBoundingClientRect();
 	var ballBound = ball.getBoundingClientRect();
 	
-	//if(needRebound(ballBound.right, ((ballBound.top+ballBound.bottom)/2)) && (ball.angle < Math.PI/2 || ball.angle > 3*Math.PI/2)){
-  if((ballBound.right > borders.right || isInsidePlayer(ballBound.right, ((ballBound.top+ballBound.bottom)/2))) && (ball.angle < Math.PI/2 || ball.angle > 3*Math.PI/2)){
+	//if((ballBound.right > borders.right || isInsidePlayer(ballBound.right, ((ballBound.top+ballBound.bottom)/2))) && (ball.angle < Math.PI/2 || ball.angle > 3*Math.PI/2)){
+	if((ballBound.right > borders.right || isInsidePlayer(ballBound.right, ((ballBound.top+ballBound.bottom)/2))) && ball.vx > 0){
 		console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
-		if(ball.angle < Math.PI/2){
-			ball.angle += 2*((Math.PI/2)-ball.angle);
-		}
-		else{
-			ball.angle += 2*((3*Math.PI/2)-ball.angle);
-		}
+		ball.vx *= -1;
 	}
-	if((ballBound.bottom > borders.bottom || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.bottom)) && ball.angle < Math.PI){
-  //else if(needRebound(((ballBound.right+ballBound.left)/2), ballBound.bottom) && ball.angle < Math.PI){
+	//if((ballBound.bottom > borders.bottom || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.bottom)) && ball.angle < Math.PI){
+	if((ballBound.bottom > borders.bottom || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.bottom)) && ball.vy > 0){
 		console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
-		ball.angle += 2*(Math.PI-ball.angle);
+		ball.vy *= -1;
 	}
-  //else if(needRebound(((ballBound.right+ballBound.left)/2), ballBound.top) && ball.angle > Math.PI){
-	if((ballBound.top < borders.top || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.top)) && ball.angle > Math.PI){
+	//if((ballBound.top < borders.top || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.top)) && ball.angle > Math.PI){
+	if((ballBound.top < borders.top || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.top)) && ball.vy < 0){
 		console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
-		ball.angle += 2*(Math.PI-ball.angle);
+		ball.vy *= -1;
 	}
-  //else if(needRebound(ballBound.left, ((ballBound.top+ballBound.bottom)/2)) && (ball.angle > Math.PI/2 && ball.angle < 3*Math.PI/2)){
-	if((ballBound.left < borders.left || isInsidePlayer(ballBound.left, ((ballBound.top+ballBound.bottom)/2))) && (ball.angle > Math.PI/2 && ball.angle < 3*Math.PI/2)){
+	//if((ballBound.left < borders.left || isInsidePlayer(ballBound.left, ((ballBound.top+ballBound.bottom)/2))) && (ball.angle > Math.PI/2 && ball.angle < 3*Math.PI/2)){
+	if((ballBound.left < borders.left || isInsidePlayer(ballBound.left, ((ballBound.top+ballBound.bottom)/2))) && ball.vx < 0){
 		console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
-		if(ball.angle < Math.PI){
-			ball.angle += 2*((Math.PI/2)-ball.angle);
-		}
-		else{
-			ball.angle += 2*((3*Math.PI/2)-ball.angle);
-		}
+		ball.vx *= -1;
 	}
+	
+	//touchBrick();
 }
 
 
 
 function update(progress) {
 	//console.log("Progress: " + progress); 
-	ball.posX += ball.speed * Math.cos(ball.angle) * progress;
-	ball.posY += ball.speed * Math.sin(ball.angle) * progress * score;
+	
+	
+	//ball.posX += ball.speed * Math.cos(ball.angle) * progress;
+	//ball.posY += ball.speed * Math.sin(ball.angle) * progress * score;
+	
 	//console.log('A frame');
 	checkRebound();
+	
+	ball.posX += ball.vx * progress;
+	ball.posY += ball.vy * progress;
 
 	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 }
