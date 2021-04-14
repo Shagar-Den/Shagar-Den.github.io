@@ -1,0 +1,39 @@
+body {
+	margin: 0;
+	background-color: eeeeee;
+}
+
+
+.title{
+	text-align: center;
+	background-color: 111111;
+	color: eeeeee;
+	width: 100%;
+	font-family: 'PT Serif', serif;
+	font-size: 32px;
+}
+
+.footnote{
+	text-align: center;
+	background-color: 111111;
+	color: d64610;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	font-family: 'PT Serif', serif;
+	font-size: 32px;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+}
+
+.footnote .footnote-quote{
+	display: inline;
+	color: dddddd;
+}
+
+.footnote .footnote-author{
+	display: inline;
+	color: bbbbbb;
+	font-style: italic;
+}
