@@ -18,7 +18,7 @@ var refPosY = borders.bottom - player.posY;
 var deltaAcceptable = 5;
 player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 player.speed = 5 * w/wRef;
-player.speedGain = 0.5;
+player.speedGain = 0.2;
 
 ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
 ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
@@ -30,7 +30,7 @@ ball.vy = ball.speed * Math.sin(ball.angle);
 
 var score = 1;
 var scoreForText = 0;
-var scoreGain = 0.05;
+var scoreGain = 0.005;
 var horizontalSpeed = 0;
 var speedIndiuced = 0.1;
 
@@ -194,12 +194,16 @@ function isInsidePlayer(pointX,pointY){
   if(inside){
 
     //Add player speed to ball
-    ball.vx += horizontalSpeed;
+    //ball.vx += horizontalSpeed;
 
     //Add player indiuced fluctation to ball speed
     var playerB = player.getBoundingClientRect();
     var coef = (pointX - (playerB.right+playerB.left)/2)/((playerB.right-playerB.left)/2);
-    ball.vx += coef * speedIndiuced * score;
+    coef = coef/Math.abs(coef) * Math.min(Math.abs(coef),0.95);
+    //ball.vx += coef * speedIndiuced * score;
+    var totalSpeed = Math.abs(ball.vx * h/w) + Math.abs(ball.vy * w/h);
+    ball.vx = coef * totalSpeed * w/h;
+    ball.vy = (1-coef) * totalSpeed * h/w;
   }
   return inside;
 }
@@ -265,12 +269,9 @@ function checkBricksPlace(){
 
 function update(progress) {
 	checkRebound();
-	
-  ball.vx = Math.min(ball.vx,20);
-  ball.vy = Math.min(ball.vy,20);
 
-	ball.posX += ball.vx * progress * score;
-	ball.posY += ball.vy * progress * score;
+	ball.posX += (ball.vx/Math.abs(ball.vx)) * Math.min(Math.abs(ball.vx * progress * score),20);
+	ball.posY += (ball.vy/Math.abs(ball.vy)) * Math.min(Math.abs(ball.vy * progress * score),20*h/w);
 
 	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 
