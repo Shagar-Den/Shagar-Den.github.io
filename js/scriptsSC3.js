@@ -1,8 +1,11 @@
 var quoteOfTheDay = document.getElementById('quote');
 var quoterOfTheDay = document.getElementById('quoter');
 
-fetch("https://api.fisenko.net/quotes?l=en")
-  .then(response => response.json())
+fetch("https://api.fisenko.net/quotes?l=en", {
+	//method : 'GET',
+	headers: {"Referrer Policy": "strict-origin-when-cross-origin"}//"Access-Control-Allow-Origin": "*"}
+})
+  .then(response => {console.log(response),response.json()})
   .then(response => {quoteOfTheDay.textContent = ' ' + response.text + ' - ', quoterOfTheDay.textContent = ' ' + response.author})
   .catch((err) => {
     console.log('Error: ' + err);
