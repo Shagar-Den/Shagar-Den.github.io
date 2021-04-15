@@ -16,7 +16,7 @@ body {
 .footnote{
 	text-align: center;
 	background-color: 111111;
-	color: d64610;
+	color: #d64610;
 	width: 100%;
 	bottom: 0;
 	left: 0;
@@ -30,6 +30,7 @@ body {
 .footnote .footnote-quote{
 	display: inline;
 	color: dddddd;
+	padding-inline: 30px;
 }
 
 .footnote .footnote-author{
@@ -37,3 +38,47 @@ body {
 	color: bbbbbb;
 	font-style: italic;
 }
+
+.list-api{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 80%;
+	margin: 2% auto auto;
+	color: 111111;
+	font-family: 'PT Serif', serif;
+	font-size: 32px;
+}
+
+.anApi{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	max-width: 80%;
+}
+
+.apiAnswer{
+	padding-inline: 30px;
+	margin: auto;
+}
+
+
+.api-title{
+	width: 100%;
+  }
+
+.apiContent{
+	display: flex;
+	width: 100%;
+}
+
+.button {
+	background-color: #d64610;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 10%;
+	padding: 15px;
+	margin: auto;
+  }
