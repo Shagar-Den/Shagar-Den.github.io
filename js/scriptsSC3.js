@@ -1,6 +1,7 @@
 var quoteOfTheDay = document.getElementById('quote');
 var quoterOfTheDay = document.getElementById('quoter');
 var apiAnswer1 = document.getElementById('firstapiAnswr');
+var apiAnswer2 = document.getElementById('foodImg');
 var allQuotes;
 
 
@@ -66,4 +67,27 @@ document.getElementById("firstapiBtn").addEventListener("click", function() {
   fetch("https://www.boredapi.com/api/activity/")
   .then(response => response.json())
   .then(response => {apiAnswer1.textContent = response.activity});
+  
+  
 });
+
+fetch("https://foodish-api.herokuapp.com/api/")
+  .then(response => response.json())
+  .then(response => {apiAnswer2.setAttribute("src", response.image)});
+
+window.addEventListener("focus", function(event)
+{
+  fetch("https://foodish-api.herokuapp.com/api/")
+  .then(response => response.json())
+  .then(response => {apiAnswer2.setAttribute("src", response.image)});
+}, false);
+
+
+
+function search(ele) {
+    if(event.keyCode === 13) {
+        alert(ele.value);        
+    }
+}
+
+
