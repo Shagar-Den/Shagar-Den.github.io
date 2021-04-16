@@ -75,19 +75,37 @@ fetch("https://foodish-api.herokuapp.com/api/")
   .then(response => response.json())
   .then(response => {apiAnswer2.setAttribute("src", response.image)});
 
+/*
 window.addEventListener("focus", function(event)
 {
   fetch("https://foodish-api.herokuapp.com/api/")
   .then(response => response.json())
   .then(response => {apiAnswer2.setAttribute("src", response.image)});
 }, false);
+*/
 
 
+const nameInput = document.querySelector('input');
+const form = document.querySelector('form');
 
+nameInput.addEventListener('input', () => {
+  nameInput.setCustomValidity('');
+  nameInput.checkValidity();
+});
+
+nameInput.addEventListener('invalid', () => {
+  if(nameInput.value === '') {
+    nameInput.setCustomValidity("Veuillez saisir votre nom d'utilisateur !");
+  } else {
+    nameInput.setCustomValidity("Un nom d'utilisateur ne peut contenir que des lettres minuscules et majuscules, veuillez réessayer");
+  }
+});
+/*
 function search(ele) {
-    if(event.keyCode === 13) {
-        alert(ele.value);        
+    if(ele.keyCode === 13) {
+		ele.currentTarget.checkValidity();
+        alert(ele.currentTarget.value);        
     }
-}
+}*/
 
 
