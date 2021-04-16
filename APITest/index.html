@@ -7,7 +7,7 @@
         <title>Shagar personal breakout page</title>
         <link rel="icon" type="image/x-icon" href="../assets/img/logos/Logoperso.png"/>
         <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet"> 
-		    <link href="../css/stylesSC3.css?version=1" rel="stylesheet" />
+		    <link href="../css/stylesSC3.css?version=40" rel="stylesheet" />
     </head>
 
     <body>
@@ -18,7 +18,7 @@
               <div class="apiTitle">Find a random activity to do?</div>
               <div class="apiContent">
                 <div class="button" id="firstapiBtn">Yes!</div>
-                <div class="apiAnswer" id="firstapiAnswr">Answer</div>
+                <div class="apiAnswer textAnswer" id="firstapiAnswr">Answer</div>
               </div>
           </div>
 		  <div class="anApi">
@@ -30,13 +30,18 @@
 		  <div class="anApi">
               <div class="apiTitle">Want to know the average year of a first name?</div>
               <div class="apiContent">
-                <form><input type="text" placeholder="Enter name here" name="name" id="name" required pattern="[A-Za-z]+"></form>
-				<!--<input type="text" placeholder="Enter name here" class="search" onkeypress="search(event)" required pattern="[A-Za-z]+">-->
+                <form onsubmit = "actionFromForm(); return false"> <input type="text" placeholder="Enter name here" name="name" id="name" required pattern="[A-Za-z]+">
+              </form>
+              <div class="apiAnswer textAnswer off" id="nameAPIAnswr"></div>
+              <div class="button off" id="nameAPIBtn">Retry!</div>
               </div>
           </div>
-      </div>
-    <div class="footnote">Quote of the day: <div class="footnote-quote" id ="quote">Something</div><div class="footnote-author" id ="quoter">Someone</div></div>
-	  
+          
+    </div>
+
+    <!-- Put the reference of all APIs used + first API more info + handle errors -->
+    
+	  <div class="footnote">Quote of the day: <div class="footnote-quote" id ="quote">Something</div><div class="footnote-author" id ="quoter">Someone</div></div>
     </body>
-    <script src="../js/scriptsSC3.js?version=15"></script>
+    <script src="../js/scriptsSC3.js?version=40"></script>
 </html>

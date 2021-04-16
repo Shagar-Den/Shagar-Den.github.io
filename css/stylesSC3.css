@@ -1,6 +1,9 @@
 body {
 	margin: 0;
 	background-color: eeeeee;
+	display: flex;
+	flex-flow: column;
+	height: 100%;
 }
 
 
@@ -18,13 +21,12 @@ body {
 	background-color: 111111;
 	color: #d64610;
 	width: 100%;
-	bottom: 0;
-	left: 0;
 	font-family: 'PT Serif', serif;
 	font-size: 32px;
-	position: absolute;
 	display: flex;
 	justify-content: center;
+	margin-top: 3%;
+	align-items: end;
 }
 
 .footnote .footnote-quote{
@@ -43,11 +45,11 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 80%;
+	width: 80%;
 	margin: 2% auto auto;
 	color: 111111;
 	font-family: 'PT Serif', serif;
-	font-size: 32px;
+	font-size: 28px;
 	flex-direction: column;
 }
 
@@ -55,9 +57,14 @@ body {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	max-width: 80%;
+	width: 80%;
 	margin: 2% auto auto;
 	text-align: center;
+	border: solid 0.2em;
+	border-radius: 20px;
+	border-color: #4f4f4f;
+	min-height: 4.5em;
+	justify-content: center;
 }
 
 .apiAnswer{
@@ -68,11 +75,13 @@ body {
 
 .api-title{
 	width: 100%;
+	font-size: 28px;
   }
 
 .apiContent{
 	display: flex;
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .button {
@@ -99,4 +108,12 @@ form{
 input{
 	margin: auto;
 	font-size: 16px;
+}
+
+.textAnswer{
+	width: 60%;
+}
+
+.off{
+	display: none;
 }

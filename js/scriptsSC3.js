@@ -1,13 +1,10 @@
+
+
+//-----------------------API used for the footer:-----------------------
 var quoteOfTheDay = document.getElementById('quote');
 var quoterOfTheDay = document.getElementById('quoter');
-var apiAnswer1 = document.getElementById('firstapiAnswr');
-var apiAnswer2 = document.getElementById('foodImg');
 var allQuotes;
-
-
 var myHeadersForQuote = new Headers();
-//myHeadersForQuote.append("Access-Control-Allow-Origin", "*");
-/*myHeadersForQuote.append("content-type",	"application/json; charset=utf-8");*/
 var myInit = { method: 'GET',
                headers: myHeadersForQuote,
                mode: 'cors',
@@ -16,36 +13,7 @@ var myInit = { method: 'GET',
 
 
 
-//FORBIDDEN ERROR or CORS ERROR ...
-/*
-fetch("https://cors-anywhere.herokuapp.com/https://api.fisenko.net/quotes?l=en",myInit)
-  .then(response => response.json())
-  .then(response => {quoteOfTheDay.textContent = ' ' + response.text + ' - ', quoterOfTheDay.textContent = ' ' + response.author})
-  .catch((err) => {
-    console.log('Error: ' + err);
-  });
-*/
-
-/*
-fetch('https://zenquotes.io/api/quotes',myInit)
-  .then(response => response.json())
-  .then(response => {quoteOfTheDay.textContent = ' ' + response.q + ' - ', quoterOfTheDay.textContent = ' ' + response.a});
-  */
-
-
-
-
-
-
-//WORKS
-/*
-//fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
-fetch('https://api.taylor.rest/',myInit)
-  .then(response => response.json())
-  .then(response => {quoteOfTheDay.textContent = ' ' + response.quote + ' - ', quoterOfTheDay.textContent = ' ' + response.author});
-  */
-
-  fetch("https://type.fit/api/quotes")
+  fetch("https://type.fit/api/quotes",myInit)
   .then(function(response) {
     return response.json();
   })
@@ -55,14 +23,17 @@ fetch('https://api.taylor.rest/',myInit)
     quoteOfTheDay.textContent = ' ' + data[nb].text, quoterOfTheDay.textContent = data[nb].author;
   });
 
-// Blur event, opposed to focus (stop update when window not focused)
+// Add an update of the quote when losing focus of the page
 window.addEventListener("blur", function(event)
 { 
   var nb = Math.floor(Math.random() * allQuotes.length);
   quoteOfTheDay.textContent = ' ' + allQuotes[nb].text, quoterOfTheDay.textContent = allQuotes[nb].author;
 }, false);
 
+//----------------------------------------------------------------------
 
+//-----------------------API used for the footer:-----------------------
+var apiAnswer1 = document.getElementById('firstapiAnswr');
 document.getElementById("firstapiBtn").addEventListener("click", function() {
   fetch("https://www.boredapi.com/api/activity/")
   .then(response => response.json())
@@ -70,24 +41,25 @@ document.getElementById("firstapiBtn").addEventListener("click", function() {
   
   
 });
+//----------------------------------------------------------------------
 
+//-----------------------API used for the footer:-----------------------
+var apiAnswer2 = document.getElementById('foodImg');
 fetch("https://foodish-api.herokuapp.com/api/")
   .then(response => response.json())
   .then(response => {apiAnswer2.setAttribute("src", response.image)});
 
-/*
-window.addEventListener("focus", function(event)
-{
-  fetch("https://foodish-api.herokuapp.com/api/")
-  .then(response => response.json())
-  .then(response => {apiAnswer2.setAttribute("src", response.image)});
-}, false);
-*/
+//----------------------------------------------------------------------
 
 
-const nameInput = document.querySelector('input');
-const form = document.querySelector('form');
 
+
+
+  //-----------------------API used for the footer:-----------------------
+  
+var nameInput = document.querySelector('input');
+var form = document.querySelector('form')[0];
+var btnNameAPI = document.getElementById('nameAPIBtn');
 nameInput.addEventListener('input', () => {
   nameInput.setCustomValidity('');
   nameInput.checkValidity();
@@ -95,17 +67,38 @@ nameInput.addEventListener('input', () => {
 
 nameInput.addEventListener('invalid', () => {
   if(nameInput.value === '') {
-    nameInput.setCustomValidity("Veuillez saisir votre nom d'utilisateur !");
+    nameInput.setCustomValidity("Please write a name !");
   } else {
-    nameInput.setCustomValidity("Un nom d'utilisateur ne peut contenir que des lettres minuscules et majuscules, veuillez réessayer");
+    nameInput.setCustomValidity("A name can only contain lowercases and uppercases, please try again");
   }
 });
-/*
-function search(ele) {
-    if(ele.keyCode === 13) {
-		ele.currentTarget.checkValidity();
-        alert(ele.currentTarget.value);        
+
+function actionFromForm(){
+  var link = "https://api.agify.io?name=" + nameInput.value;
+  document.getElementById('nameAPIAnswr').classList.remove('off');
+  btnNameAPI.classList.remove('off');
+  nameInput.classList.add('off');
+  fetch(link)
+  .then(response => response.json())
+  .then(response => {
+    if(response.age == null){
+      document.getElementById('nameAPIAnswr').textContent = response.name + " does not seem to have an age... yet ?";
     }
-}*/
+    else{
+      document.getElementById('nameAPIAnswr').textContent = "The average age of " + response.name + " is " + response.age + " years old."
+    }
+  })
+  .catch((err) => {
+    document.getElementById('nameAPIAnswr').textContent = "Sorry, an error occured !";
+    console.log('Error: ' + err);
+  });
+}
 
 
+document.getElementById("nameAPIBtn").addEventListener("click", function() {
+  document.getElementById('nameAPIAnswr').classList.add('off');
+  btnNameAPI.classList.add('off');
+  nameInput.classList.remove('off');
+});
+
+//----------------------------------------------------------------------
