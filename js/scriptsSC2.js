@@ -3,6 +3,11 @@ var h = window.innerHeight;
 var wRef = 2560; 
 
 
+var scoreCount = 50000;
+var Timer = 0;
+var bestScore = 0;
+var hasWon = false;
+
 const terrain = document.getElementById('area');
 const tableB = document.getElementById('table');
 const player = document.getElementById('player');
@@ -73,21 +78,81 @@ function addElement (c,r, container,nbColomn) {
 
 
 function drawBricks() {
-  for(var r=0; r<brickRowCount; r++) {
-    //create a div brick-table-row and change var nb of colomn 1 out of 2 row
-    var newDiv = document.createElement("div");
-    tableB.appendChild(newDiv);
-    newDiv.classList.add('bricks-table-row');
-    newDiv.style.width = '80%';
-    newDiv.style.height = `${50/(brickRowCount+1)}%`;
-    var nbColomn = r%2 ? brickColumnCount : brickColumnCount+1;
-    for(var c=0; c<nbColomn; c++) {
-            addElement (c,r, newDiv,nbColomn);
-      }
+  var bricksElem = document.getElementsByClassName("brick");
+  if(bricksElem.length === 0){
+	  for(var r=0; r<brickRowCount; r++) {
+		//create a div brick-table-row and change var nb of colomn 1 out of 2 row
+		var newDiv = document.createElement("div");
+		tableB.appendChild(newDiv);
+		newDiv.classList.add('bricks-table-row');
+		newDiv.style.width = '80%';
+		newDiv.style.height = `${50/(brickRowCount+1)}%`;
+		var nbColomn = r%2 ? brickColumnCount : brickColumnCount+1;
+		for(var c=0; c<nbColomn; c++) {
+				addElement (c,r, newDiv,nbColomn);
+		  }
+	  }
   }
+  else{
+	  for (var i = 0, len = bricksElem.length; i < len; i++) {
+		  bricksElem[i].style.backgroundColor = '222222';
+        bricks[i].active = true;
+	  }
+  }
+  
 }
 
-drawBricks();
+//drawBricks();
+
+
+function init(){	
+	drawBricks();
+	Timer = Date.now();
+	hasWon = false;
+}
+
+init();
+
+
+function winAct(){
+	hasWon = true;
+	var finalTime = Math.floor((Date.now() - Timer)/1000);
+	var finalScore = Math.floor(scoreCount/finalTime);
+	if(finalScore > bestScore){
+		bestScore = finalScore;
+		document.getElementById('resultScore').textContent = finalScore.toString();
+		document.getElementById('trackScore').textContent = "New best!"
+	}
+	else{
+		document.getElementById('resultScore').textContent = finalScore.toString();
+		document.getElementById('trackScore').textContent = "Best score: " + bestScore.toString();
+	}
+	
+	document.getElementById('resultTime').textContent = "Your time: " + finalTime.toString() + " sec.";
+	
+	document.getElementById('winPanel').classList.remove('off');
+}
+
+document.getElementById("buttonRestart").addEventListener("click", function() {
+	document.getElementById('winPanel').classList.add('off');
+	
+	borders = terrain.getBoundingClientRect();
+	player.posX = (borders.right + borders.left - (player.getBoundingClientRect().right + player.getBoundingClientRect().left)) / 2;
+	player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
+	player.speed = 5 * w/wRef;
+	player.speedGain = 0.2;
+	
+	ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
+	ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
+	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
+	ball.speed = 0.1 * w/wRef;
+	ball.angle = Math.random() * 2 * Math.PI;
+	ball.vx = ball.speed * Math.cos(ball.angle);
+	ball.vy = ball.speed * Math.sin(ball.angle);
+	
+	init();
+});
+
 
 var running = true;
 
@@ -189,6 +254,17 @@ function touchBrick(){
 	}
 }
 
+function hasActiveBricks(){
+	var activeFound = false;
+	var bricksElem = document.getElementsByClassName("brick");
+	for (var i = 0, len = bricksElem.length; i < len; i++) {
+		if(bricks[i].active && !activeFound){
+			activeFound = true;
+		}
+	}
+	return activeFound;
+}
+
 function isInsidePlayer(pointX,pointY){
   var inside = isInsideElement(pointX,pointY,player);
   if(inside){
@@ -250,6 +326,10 @@ function checkRebound(){
 	}
 	
 	touchBrick();
+	
+	if(!hasActiveBricks() && !hasWon){
+		winAct();
+	}
 }
 
 /*

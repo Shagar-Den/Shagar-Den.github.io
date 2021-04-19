@@ -7,18 +7,27 @@
         <title>Shagar personal breakout page</title>
         <link rel="icon" type="image/x-icon" href="../assets/img/logos/Logoperso.png"/>
         <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet"> 
-		    <link href="../css/stylesSC2.css?version=6" rel="stylesheet" />
+		    <link href="../css/stylesSC2.css?version=1" rel="stylesheet" />
     </head>
 
     <body>
       <div class="title">Breakout</div>
+	  
 	  <div class="playground" id="area">
-      <div class="bricks-table" id="table"></div>
-      <div class="ball-box" id="ball"></div>
-      <div class="player-box" id="player"></div>
+		  <div class="bricks-table" id="table"></div>
+		  <div class="ball-box" id="ball"></div>
+		  <div class="player-box" id="player"></div>
+		  <div class="panel off" id="winPanel">
+			<div class="panelContent">You win!</div>
+			<div class="panelContent" id="resultTime">Your time:</div>
+			<div class="panelContent" id="resultScore">ScoreValue</div>
+			<div class="panelContent" id="trackScore">New best!</div>
+			<div class="panelContent button" id="buttonRestart">Restart</div>
+		  </div>
 	  </div>
-    <div class="score">Score: <div class="score-text" id ="scoreNum">0</div></div>
+	  
+    <div class="score">Total bricks broken: <div class="score-text" id ="scoreNum">0</div></div>
 	  
     </body>
-    <script src="../js/scriptsSC2.js?version=7"></script>
+    <script src="../js/scriptsSC2.js?version=1"></script>
 </html>
