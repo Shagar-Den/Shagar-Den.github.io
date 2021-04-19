@@ -112,7 +112,24 @@ input{
 
 .textAnswer{
 	width: 60%;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: auto;
+	grid-template-areas:
+	"Content"
+	"People"
+	"Price";
 }
+.textAnswer.t1{
+	grid-area: Content;
+}
+.textAnswer.t2{
+	grid-area: People;
+}
+.textAnswer.t3{
+	grid-area: Price;
+}
+
 
 .off{
 	display: none;
@@ -120,18 +137,60 @@ input{
 
 .apiShowcase{
 	margin: 3% auto auto;
-	align-items: end;
+	/*align-items: end;*/
+	display: grid;
+	grid-template-columns: 25% 25% 25% 25%;
+	grid-template-rows: auto;
+    grid-template-areas: 
+	"header header header header" 
+	"api1 . . ." 
+	". . api2 ." 
+	". api3 . ." 
+	". . . api4";
+	width: 50%;
 }
 
 .showCaseTitle{
 	text-align: center;
-}
-
-.showCaseList{
-	display: flex;
-    flex-flow: column;
+	grid-column-start: 1;
+	grid-column-end: 5;
+	grid-row-start: 1;
+	grid-row-end: 1;
+	font-family: 'PT Serif', serif;
+	font-size: 32px;
 }
 
 .case{
 	text-align: center;
+	border-radius: 0.4em;
+	margin: 2%;
+	font-size: 26px;
+	padding:10%;
+	width: 50%;
+}
+
+.case.c1{
+	grid-area: api1;
+	background-color: #6ba3ff;
+}
+
+.case.c2{
+	grid-area: api2;
+	background-color: #eb3b5a;
+	color: #ccc;
+}
+
+.case.c3{
+	grid-area: api3;
+	background-color: #ebcd73;
+}
+
+.case.c4{
+	grid-area: api4;
+	background-color: #0a0a23;
+	color: #ccc;
+}
+
+.case a{
+	color: inherit;
 }

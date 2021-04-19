@@ -12,7 +12,7 @@ var myInit = { method: 'GET',
 
 
 
-
+//-----------------------API used for the footer:-----------------------
   fetch("https://type.fit/api/quotes",myInit)
   .then(function(response) {
     return response.json();
@@ -32,18 +32,47 @@ window.addEventListener("blur", function(event)
 
 //----------------------------------------------------------------------
 
-//-----------------------API used for the footer:-----------------------
-var apiAnswer1 = document.getElementById('firstapiAnswr');
+//-----------------------API used for the first part:-----------------------
+var apiAnswer1_Content = document.getElementById('firstapiAnswrContent');
+var apiAnswer1_People = document.getElementById('firstapiAnswrPeople');
+var apiAnswer1_Price = document.getElementById('firstapiAnswrMoney');
+
+function translatePrice(price){
+  var out = "Free";
+  if(price >= 0.85){
+    out = "$$$$";
+  }
+  else if(price >= 0.5){
+    out = "$$$";
+  }
+  else if(price >= 0.2){
+    out = "$$";
+  }
+  else if(price !== 0){
+    out = "$";
+  }
+  return out;
+}
+
+
+
 document.getElementById("firstapiBtn").addEventListener("click", function() {
   fetch("https://www.boredapi.com/api/activity/")
   .then(response => response.json())
-  .then(response => {apiAnswer1.textContent = response.activity});
+  .then(response => {
+    console.log(response.activity);
+    console.log(response.participants);
+    console.log(response.price);
+    apiAnswer1_Content.textContent = response.activity;
+    apiAnswer1_People.textContent = "Nb people: " + response.participants;
+    apiAnswer1_Price.textContent = "Money: " + translatePrice(Number(response.price));
+  });
   
   
 });
 //----------------------------------------------------------------------
 
-//-----------------------API used for the footer:-----------------------
+//-----------------------API used for the second part:-----------------------
 var apiAnswer2 = document.getElementById('foodImg');
 fetch("https://foodish-api.herokuapp.com/api/")
   .then(response => response.json())
@@ -55,7 +84,7 @@ fetch("https://foodish-api.herokuapp.com/api/")
 
 
 
-  //-----------------------API used for the footer:-----------------------
+  //-----------------------API used for the third part:-----------------------
   
 var nameInput = document.querySelector('input');
 var form = document.querySelector('form')[0];
