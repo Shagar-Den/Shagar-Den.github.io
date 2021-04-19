@@ -11,8 +11,6 @@ var myInit = { method: 'GET',
                cache: 'default' };
 
 
-
-//-----------------------API used for the footer:-----------------------
   fetch("https://type.fit/api/quotes",myInit)
   .then(function(response) {
     return response.json();
