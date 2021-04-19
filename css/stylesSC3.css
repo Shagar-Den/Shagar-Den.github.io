@@ -117,3 +117,21 @@ input{
 .off{
 	display: none;
 }
+
+.apiShowcase{
+	margin: 3% auto auto;
+	align-items: end;
+}
+
+.showCaseTitle{
+	text-align: center;
+}
+
+.showCaseList{
+	display: flex;
+    flex-flow: column;
+}
+
+.case{
+	text-align: center;
+}
