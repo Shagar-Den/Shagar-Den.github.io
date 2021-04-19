@@ -19,6 +19,11 @@ var myInit = { method: 'GET',
     allQuotes = data;
     var nb = Math.floor(Math.random() * data.length);
     quoteOfTheDay.textContent = ' ' + data[nb].text, quoterOfTheDay.textContent = data[nb].author;
+  })
+  .catch((err) => {
+    quoteOfTheDay.textContent = err;
+    quoterOfTheDay.textContent = "Error";
+    console.log('Error: ' + err);
   });
 
 // Add an update of the quote when losing focus of the page
@@ -64,6 +69,12 @@ document.getElementById("firstapiBtn").addEventListener("click", function() {
     apiAnswer1_Content.textContent = response.activity;
     apiAnswer1_People.textContent = "Nb people: " + response.participants;
     apiAnswer1_Price.textContent = "Money: " + translatePrice(Number(response.price));
+  })
+  .catch((err) => {
+    apiAnswer1_Content.textContent = "-";
+    apiAnswer1_People.textContent = "An error occured :/";
+    apiAnswer1_Price.textContent = "-";
+    console.log('Error: ' + err);
   });
   
   
@@ -74,7 +85,11 @@ document.getElementById("firstapiBtn").addEventListener("click", function() {
 var apiAnswer2 = document.getElementById('foodImg');
 fetch("https://foodish-api.herokuapp.com/api/")
   .then(response => response.json())
-  .then(response => {apiAnswer2.setAttribute("src", response.image)});
+  .then(response => {apiAnswer2.setAttribute("src", response.image)})
+  .catch((err) => {
+    apiAnswer2.setAttribute("src", "../assets/img/icons/work_in_progress");
+    console.log('Error: ' + err);
+  });
 
 //----------------------------------------------------------------------
 
