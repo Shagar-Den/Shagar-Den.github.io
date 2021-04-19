@@ -7,14 +7,55 @@
         <title>Shagar personal breakout page</title>
         <link rel="icon" type="image/x-icon" href="../assets/img/logos/Logoperso.png"/>
         <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet"> 
-		    <link href="../css/stylesSC3.css?version=3" rel="stylesheet" />
+		    <link href="../css/stylesSC3.css?version=1" rel="stylesheet" />
     </head>
 
     <body>
       <div class="title">API Paradise</div>
 	  </div>
-    <div class="footnote">Quote of the day: <div class="footnote-quote" id ="quote">Something</div><div class="footnote-author" id ="quoter">Someone</div></div>
-	  
+      <div class="list-api">
+          <div class="anApi">
+              <div class="apiTitle">Find a random activity to do?</div>
+              <div class="apiContent">
+                <div class="button" id="firstapiBtn">Yes!</div>
+                <div class="apiAnswer textAnswer">
+                  <div class="t1" id="firstapiAnswrContent">-</div>
+                  <div class="t2" id="firstapiAnswrPeople">Answer</div>
+                  <div class="t3" id="firstapiAnswrMoney">-</div>
+                </div>
+              </div>
+          </div>
+		  <div class="anApi">
+              <div class="apiTitle">Are you hungry? No? Well, here!</div>
+              <div class="apiContent">
+                <img id="foodImg" src=""></img>
+              </div>
+          </div>
+		  <div class="anApi">
+              <div class="apiTitle">Want to know the average year of a first name?</div>
+              <div class="apiContent">
+                <form onsubmit = "actionFromForm(); return false"> <input type="text" placeholder="Enter name here" name="name" id="name" required pattern="[A-Za-z]+">
+              </form>
+              <div class="apiAnswer textAnswer off" id="nameAPIAnswr"></div>
+              <div class="button off" id="nameAPIBtn">Retry!</div>
+              </div>
+          </div>
+          
+    </div>
+	
+	<div class="apiShowcase">
+		<div class="showCaseTitle">All APIs used on this page</div>
+    <div class="case c1"><a href="https://www.boredapi.com/">Bored API</a></div>
+		<div class="case c2"><a href="https://agify.io/">Agify</a></div>
+		<div class="case c3"><a href="https://foodish-api.herokuapp.com/">Foodish</a></div>
+		<div class="case c4"><a href="https://forum.freecodecamp.org/t/free-api-inspirational-quotes-json-with-code-examples/311373">Type.fit API</a></div>
+		<!-- <div class="showCaseList">
+		</div>-->
+	</div>
+
+    <!-- Put the reference of all APIs used + first API more info + handle errors -->
+    
+	  <div class="footnote">Quote of the day: <div class="footnote-quote" id ="quote">Something</div><div class="footnote-author" id ="quoter">Someone</div></div>
     </body>
-    <script src="../js/scriptsSC3.js?version=2"></script>
+    <script src="../js/scriptsSC3.js?version=1"></script>
 </html>
