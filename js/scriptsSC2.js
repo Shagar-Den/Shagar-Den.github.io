@@ -21,12 +21,17 @@ player.posX = (borders.right + borders.left - (player.getBoundingClientRect().ri
 player.posY = borders.bottom - player.getBoundingClientRect().bottom - 50;
 var refPosY = borders.bottom - player.posY;
 var deltaAcceptable = 5;
+
+player.initPosX = player.posX;
+player.initPosY = player.posY;
 player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 player.speed = 5 * w/wRef;
 player.speedGain = 0.2;
 
 ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
 ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
+ball.initPosX = ball.posX;
+ball.initPosY = ball.posY;
 ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 ball.speed = 0.1 * w/wRef;
 ball.angle = Math.random() * 2 * Math.PI;
@@ -120,11 +125,11 @@ function winAct(){
 	var finalScore = Math.floor(scoreCount/finalTime);
 	if(finalScore > bestScore){
 		bestScore = finalScore;
-		document.getElementById('resultScore').textContent = finalScore.toString();
+		document.getElementById('resultScore').textContent = "Score: " + finalScore.toString();
 		document.getElementById('trackScore').textContent = "New best!"
 	}
 	else{
-		document.getElementById('resultScore').textContent = finalScore.toString();
+		document.getElementById('resultScore').textContent = "Score: " + finalScore.toString();
 		document.getElementById('trackScore').textContent = "Best score: " + bestScore.toString();
 	}
 	
@@ -136,15 +141,11 @@ function winAct(){
 document.getElementById("buttonRestart").addEventListener("click", function() {
 	document.getElementById('winPanel').classList.add('off');
 	
-	borders = terrain.getBoundingClientRect();
-	player.posX = (borders.right + borders.left - (player.getBoundingClientRect().right + player.getBoundingClientRect().left)) / 2;
-	player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
+	player.style.transform = `translate(${player.initPosX}px, ${player.initPosY}px)`;
 	player.speed = 5 * w/wRef;
 	player.speedGain = 0.2;
 	
-	ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
-	ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
-	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
+	ball.style.transform = `translate(${ball.initPosX}px, ${ball.initPosY}px)`;
 	ball.speed = 0.1 * w/wRef;
 	ball.angle = Math.random() * 2 * Math.PI;
 	ball.vx = ball.speed * Math.cos(ball.angle);
