@@ -1,3 +1,6 @@
+
+//Set all variables
+
 var w = window.innerWidth;
 var h = window.innerHeight;
 var wRef = 2560; 
@@ -7,6 +10,7 @@ var scoreCount = 50000;
 var Timer = 0;
 var bestScore = 0;
 var hasWon = false;
+var maxSpeed = 0.6;
 
 const terrain = document.getElementById('area');
 const tableB = document.getElementById('table');
@@ -24,28 +28,27 @@ var deltaAcceptable = 5;
 
 player.initPosX = player.posX;
 player.initPosY = player.posY;
-player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
-player.speed = 5 * w/wRef;
-player.speedGain = 0.2;
+/*player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
+player.speed = 5;
+player.speedGain = 0.2;*/
 
 ball.posX = (borders.right + borders.left - (ball.getBoundingClientRect().right + ball.getBoundingClientRect().left)) / 2;
 ball.posY = ((borders.bottom + borders.top)*1.5 - (ball.getBoundingClientRect().bottom + ball.getBoundingClientRect().top)) / 2;
 ball.initPosX = ball.posX;
 ball.initPosY = ball.posY;
-ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
-ball.speed = 0.1 * w/wRef;
+/*ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
+ball.speed = 0.3;
 ball.angle = Math.random() * 2 * Math.PI;
 ball.vx = ball.speed * Math.cos(ball.angle);
-ball.vy = ball.speed * Math.sin(ball.angle);
+ball.vy = ball.speed * Math.sin(ball.angle);*/
 
-var score = 1;
-var scoreForText = 0;
-var scoreGain = 0.005;
-var horizontalSpeed = 0;
-var speedIndiuced = 0.1;
-
+var score; //speed coef value (initialise value in init)
+var scoreForText = 0; //score show on screen (total bricks broken)
+var scoreGain = 0.01; //speed coef increasing delta value
+var running = true; //To see if window has focus each game loop
 
 
+//Set up the bricks count (rows, colomn, min value of playing area...)
 var brickColumnCount = 14;
 var brickRowCount = 6;
 var brickWidth = 75;
@@ -55,14 +58,15 @@ var brickVerticalPadding = 30;
 var brickOffsetLeft = (borders.right + borders.left)/2 - (brickColumnCount/2)*brickWidth;
 var brickOffsetTop = 30 + borders.top ;
 
-terrain.style.minWidth = `${brickColumnCount*(brickWidth+brickHorizontalPadding) + 2*brickWidth}px`; 
+
+terrain.style.minWidth = `${brickColumnCount*(brickWidth+brickHorizontalPadding) + 2*brickWidth}px`;
 terrain.style.minHeight = `${brickRowCount*(brickHeight+brickVerticalPadding)*2}px`; 
 
 
 var bricks = [];
 var bNb = 0;
 
-
+//Create the bricks
 function addElement (c,r, container,nbColomn) {
   if(!(c==brickColumnCount && r%2==0))
   {
@@ -70,18 +74,13 @@ function addElement (c,r, container,nbColomn) {
     container.appendChild(newDiv);
     newDiv.classList.add('brick');
     newDiv.style.width = `${100/(nbColomn+1)}%`;
-	//newDiv.style.
-    //var x = (c*(brickWidth+brickHorizontalPadding))+brickOffsetLeft - ((newDiv.getBoundingClientRect().right + newDiv.getBoundingClientRect().left) / 2) - (r%2 * brickWidth/2);
-    //var y = (r*(brickHeight+brickVerticalPadding))+brickOffsetTop -((newDiv.getBoundingClientRect().top + newDiv.getBoundingClientRect().bottom) / 2);
     bricks[bNb] = {active : true};
     bNb++
-    //newDiv.style.transform = `translate(${x}px, ${y}px)`;
-    //newDiv.style.transform = `translate(${x*100/brickWidth}%, ${y*100/brickHeight}%)`;
   }
   
 }
 
-
+//Draw bricks on screen (create them on first run and change their value on restart)
 function drawBricks() {
   var bricksElem = document.getElementsByClassName("brick");
   if(bricksElem.length === 0){
@@ -107,18 +106,32 @@ function drawBricks() {
   
 }
 
-//drawBricks();
 
-
+//Initialize the board. Regroup the few steps needed each time
 function init(){	
+
+  score = 1;
+
+  player.style.transform = `translate(${player.initPosX}px, ${player.initPosY}px)`;
+	player.speed = 5;
+	player.speedGain = 0.2;
+	
+	ball.style.transform = `translate(${ball.initPosX}px, ${ball.initPosY}px)`;
+	ball.speed = 0.3;
+	ball.angle = Math.random() * 2 * Math.PI;
+	ball.vx = ball.speed * Math.cos(ball.angle);
+	ball.vy = ball.speed * Math.sin(ball.angle);
+
+
 	drawBricks();
 	Timer = Date.now();
 	hasWon = false;
 }
 
+//Run initialization on first time.
 init();
 
-
+//Show the win panel with score, time and previous best if needed
 function winAct(){
 	hasWon = true;
 	var finalTime = Math.floor((Date.now() - Timer)/1000);
@@ -138,64 +151,43 @@ function winAct(){
 	document.getElementById('winPanel').classList.remove('off');
 }
 
+
+//Restart the game when pressing restart button
 document.getElementById("buttonRestart").addEventListener("click", function() {
 	document.getElementById('winPanel').classList.add('off');
-	
-	player.style.transform = `translate(${player.initPosX}px, ${player.initPosY}px)`;
-	player.speed = 5 * w/wRef;
-	player.speedGain = 0.2;
-	
-	ball.style.transform = `translate(${ball.initPosX}px, ${ball.initPosY}px)`;
-	ball.speed = 0.1 * w/wRef;
-	ball.angle = Math.random() * 2 * Math.PI;
-	ball.vx = ball.speed * Math.cos(ball.angle);
-	ball.vy = ball.speed * Math.sin(ball.angle);
 	
 	init();
 });
 
 
-var running = true;
+
+//-------Player movement, to stay on the same Y value and to not go off area----------
 
 function moveLeft(){
   var playerBound = player.getBoundingClientRect();
-  if(playerBound.left>borders.left){
-      if(playerBound.left - player.speed<borders.left){
-        player.posX -= playerBound.left-borders.left;
+  var currentBorders = terrain.getBoundingClientRect();
+  if(playerBound.left>currentBorders.left){
+      if(playerBound.left - player.speed<currentBorders.left){
+        player.posX -= playerBound.left-currentBorders.left;
       }
       else{
         player.posX -= player.speed;
       }
-      horizontalSpeed = -ball.speed;
   }
 }
 
 function moveRight(){
   var playerBound = player.getBoundingClientRect();
-  if(playerBound.right<borders.right){
-      if(playerBound.right + player.speed>borders.right){
-        player.posX += borders.right - playerBound.right;
+  var currentBorders = terrain.getBoundingClientRect();
+  if(playerBound.right<currentBorders.right){
+      if(playerBound.right + player.speed>currentBorders.right){
+        player.posX += currentBorders.right - playerBound.right;
       }
       else{
         player.posX += player.speed;
       }
-      horizontalSpeed = ball.speed;
   }
 }
-
-/*function moveUp(){
-  if(player.posY>borderY){
-      player.posY -= player.speed;
-  }
-}
-
-function moveDown(){
-  if(player.posY<borderY){
-      player.posY += player.speed;
-  }
-}*/
-
-
 
 
 function movePlayer() {
@@ -206,9 +198,6 @@ function movePlayer() {
   else if (pressedKeys[39] && !pressedKeys[37] ){
     moveRight();
   }   //right arrow key only
-  else{
-    horizontalSpeed = 0;
-  }
 
   var deltaP = terrain.getBoundingClientRect().bottom - player.posY;
   if(deltaP > refPosY+deltaAcceptable || deltaP < refPosY-deltaAcceptable){
@@ -219,6 +208,9 @@ function movePlayer() {
   player.style.transform = `translate(${player.posX}px, ${player.posY}px)`;
 }
 
+//---------------------------------------------------------------------------
+
+//Loop through all active bricks to see if ball is touching, and hide the brick + increase correspondent value if needed
 function touchBrick(){
 	var ballBound = ball.getBoundingClientRect();
 	var bricksElem = document.getElementsByClassName("brick");
@@ -243,8 +235,6 @@ function touchBrick(){
       }
       if(toRemove){
         bricksElem[i].style.backgroundColor = 'eeeeee';
-        //--len;
-        //--i;
         score += scoreGain;
         player.speed += player.speedGain;
         ++scoreForText;
@@ -255,6 +245,8 @@ function touchBrick(){
 	}
 }
 
+
+// check if there are still active bricks on the board (if not we won)
 function hasActiveBricks(){
 	var activeFound = false;
 	var bricksElem = document.getElementsByClassName("brick");
@@ -266,25 +258,25 @@ function hasActiveBricks(){
 	return activeFound;
 }
 
+// check if ball touch the player bar, in that case, make the ball rebound with a determined angle (depend on the touching point)
 function isInsidePlayer(pointX,pointY){
   var inside = isInsideElement(pointX,pointY,player);
   if(inside){
-
-    //Add player speed to ball
-    //ball.vx += horizontalSpeed;
-
-    //Add player indiuced fluctation to ball speed
     var playerB = player.getBoundingClientRect();
     var coef = (pointX - (playerB.right+playerB.left)/2)/((playerB.right-playerB.left)/2);
-    coef = coef/Math.abs(coef) * Math.min(Math.abs(coef),0.95);
-    //ball.vx += coef * speedIndiuced * score;
-    var totalSpeed = Math.abs(ball.vx * h/w) + Math.abs(ball.vy * w/h);
-    ball.vx = coef * totalSpeed * w/h;
-    ball.vy = (1-coef) * totalSpeed * h/w;
+    var signCoef = (coef/Math.abs(coef));
+    coef = Math.min(Math.abs(coef),0.95);
+
+    var vectorSpeedSqrd = ball.vx * ball.vx + ball.vy * ball.vy;
+
+    ball.vx = signCoef * Math.sqrt(coef * vectorSpeedSqrd);
+    ball.vy = Math.sqrt((1-coef) * vectorSpeedSqrd);
   }
   return inside;
 }
 
+
+// function to check if ball point inside an object (player or brick) 
 function isInsideElement(pointX,pointY,thing){
   var thingBound = thing.getBoundingClientRect();
   if(pointY > thingBound.top && pointY < thingBound.bottom && pointX < thingBound.right && pointX > thingBound.left){
@@ -295,6 +287,7 @@ function isInsideElement(pointX,pointY,thing){
   }
 }
 
+// to check if ball point is outside of the area borders
 function isOutsideBox(pointX,pointY){
   var borders = terrain.getBoundingClientRect();
   if(pointY > borders.bottom || pointY < borders.top || pointX < borders.left || pointX > borders.right){
@@ -304,20 +297,16 @@ function isOutsideBox(pointX,pointY){
   return false;
 }
 
-function needRebound(pointX,pointY){
-  return (isInsidePlayer(pointX,pointY) ||isOutsideBox(pointX,pointY));
-}
-
+// check if ball bounce onto something and act accordingly (bricks behaviour is treated separatly as we need to loop through all and do other actions in case of touch)
 function checkRebound(){
 	var borders = terrain.getBoundingClientRect();
 	var ballBound = ball.getBoundingClientRect();
-	
-	if((ballBound.right > borders.right || isInsidePlayer(ballBound.right, ((ballBound.top+ballBound.bottom)/2))) && ball.vx > 0){
-		//console.log('Ball',ballBound.top, ballBound.right, ballBound.bottom, ballBound.left)
-		ball.vx *= -1;
-	}
+
 	if((ballBound.bottom > borders.bottom || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.bottom)) && ball.vy > 0){
 		ball.vy *= -1;
+	}
+	if((ballBound.right > borders.right || isInsidePlayer(ballBound.right, ((ballBound.top+ballBound.bottom)/2))) && ball.vx > 0){
+		ball.vx *= -1;
 	}
 	if((ballBound.top < borders.top || isInsidePlayer(((ballBound.right+ballBound.left)/2), ballBound.top)) && ball.vy < 0){
 		ball.vy *= -1;
@@ -327,41 +316,31 @@ function checkRebound(){
 	}
 	
 	touchBrick();
-	
-	if(!hasActiveBricks() && !hasWon){
-		winAct();
-	}
 }
 
-/*
-function checkBricksPlace(){
-  var bricksElem = document.getElementsByClassName("brick");
-	for (var i = 0, len = bricksElem.length; i < len; i++) {
-    var x = (bricksElem[i].getBoundingClientRect().right + bricksElem[i].getBoundingClientRect().left) / 2;
-    if(bricks[i].xOffset != x - (terrain.getBoundingClientRect().right + terrain.getBoundingClientRect().left)/2){
-      var nx = (terrain.getBoundingClientRect().right + terrain.getBoundingClientRect().left)/2 + bricks[i].xOffset;
-      var ny = (bricksElem[i].getBoundingClientRect().top + bricksElem[i].getBoundingClientRect().bottom) / 2;
-      bricksElem[i].style.transform = `translate(${nx}px, ${ny}px)`;
-    }
-  }
-}
-*/
-
-
+// Active game loop, progress is the delta-t since last loop, is makes the ball move at the same speed over time.
 function update(progress) {
 	checkRebound();
 
-	ball.posX += (ball.vx/Math.abs(ball.vx)) * Math.min(Math.abs(ball.vx * progress * score),20);
-	ball.posY += (ball.vy/Math.abs(ball.vy)) * Math.min(Math.abs(ball.vy * progress * score),20*h/w);
+  var totalSpeed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy) * score;
+  console.log(totalSpeed);
+  var coefX = (ball.vx * score)/totalSpeed;
+  var coefY = (ball.vy * score)/totalSpeed;
+  totalSpeed = Math.min(totalSpeed, maxSpeed); //security check, to not overspeeding even if we decided to go crazy on score coef.
+
+  ball.posX += coefX * totalSpeed * progress;
+	ball.posY += coefY * totalSpeed * progress;
 
 	ball.style.transform = `translate(${ball.posX}px, ${ball.posY}px)`;
 
   movePlayer();
 
-  //checkBricksPlace();
+  if(!hasActiveBricks() && !hasWon){ //check if there are no active bricks and if have not won yet
+		winAct();
+	}
 }
 
-
+// Game loop, always run even if window is not focused. Call the active game loop only when window is focused
 function loop(timestamp) {
   var progress = timestamp - lastRender
 
@@ -370,17 +349,19 @@ function loop(timestamp) {
   }
 
   lastRender = timestamp
-  window.requestAnimationFrame(loop)
+  window.requestAnimationFrame(loop) // call next loop on frame
 }
+
+//Start the game loop
 var lastRender = 0
 window.requestAnimationFrame(loop)
 
-
+//Get key pressed input
 var pressedKeys = {};
 window.onkeyup = function(e) { pressedKeys[e.keyCode] = false; }
 window.onkeydown = function(e) { pressedKeys[e.keyCode] = true; }
 
-// Set up event handler to run update for the window focus event
+// Set up event handler to run update for the window focus event, we can continue the game (ball and player movement)
 window.addEventListener("focus", function(event) 
 { 
     running = true;
