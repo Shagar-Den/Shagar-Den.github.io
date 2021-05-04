@@ -323,7 +323,7 @@ function update(progress) {
 	checkRebound();
 
   var totalSpeed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy) * score;
-  console.log(totalSpeed);
+  //console.log(totalSpeed);
   var coefX = (ball.vx * score)/totalSpeed;
   var coefY = (ball.vy * score)/totalSpeed;
   totalSpeed = Math.min(totalSpeed, maxSpeed); //security check, to not overspeeding even if we decided to go crazy on score coef.
