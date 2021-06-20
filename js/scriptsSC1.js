@@ -14,7 +14,7 @@ document.body.appendChild( renderer.domElement );
 var cubeGeometry = new THREE.BoxGeometry( 1, 1, 1 );
 var cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
 var cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
-cube.position.x = -2
+cube.position.x = -2;
 cube.position.z = -5;
 scene.add(cube);
 
