@@ -183,28 +183,259 @@
 			}
         });
 		
-		var progressI = 1;
-		var totalDiscover = $('t[data-o]').length + 1;
-		
 		function update(){
-			if(progressI<totalDiscover){
-				progressI++;
+            progressI++;
+			if(progressI<=totalDiscover){
 				var percentI = progressI/totalDiscover;
 				move(Math.round(percentI*100));
 			}
+            /*if(progressI==2 && !state.FirstStepMedal && !fromCheat){
+                state.FirstStepMedal = true;
+                save();
+            }
+            if(progressI==totalDiscover && !state.ExplorerMedal && !fromCheat){
+                state.ExplorerMedal = true;
+                save();
+            }*/
+            UpdateAchievements();
 		}
 		function resetProgress(){
 			progressI = 0;
+            fromCheat = false;
 			update();
 		}
 		function cheatOnProgress(){
 			progressI = totalDiscover-1;
+            fromCheat = true;
 			update();
 		}
+
+        //Erase the local storage when necessary. (Only on debug time !!)
+        $('.erase_localstorage').click(function() {
+            restart();
+          });
 	
 	
 })(jQuery); // End of use strict
 
+
+function Achievement(name, text, checkFunction){
+    this.name = name;
+    this.text = text;
+    this.checkFunction = checkFunction;
+}
+
+//Gamification variables
+var state = {
+   NbfSecrets : 0,
+   ExplorerMedal : false,
+   FirstStepMedal : false,
+   MasterOfLinks : false,
+   HiddenPathMedal : false,
+   AppUserMed : false,
+   BreakoutLevel: 0,
+   Socializer : false,
+   GameTester : false,
+   CodeDigger : false 
+}
+
+var previous_state = {
+    NbfSecrets : 0,
+    ExplorerMedal : false,
+    FirstStepMedal : false,
+    MasterOfLinks : false,
+    HiddenPathMedal : false,
+    AppUserMed : false,
+    BreakoutLevel: 0,
+    Socializer : false,
+    GameTester : false,
+    CodeDigger : false 
+}
+
+var achievements = new Array();;
+
+achievements.push(new Achievement(
+    "Explorer", 
+    "You are a grown exlorer now!", 
+    function() {
+        state.ExplorerMedal = (progressI==totalDiscover && !state.ExplorerMedal && !fromCheat && !previous_state.ExplorerMedal);
+        return state.ExplorerMedal;
+    })
+);
+
+achievements.push(new Achievement(
+    "Curious", 
+    "Your first steps... Everything starts from here.",
+    function() {
+        state.FirstStepMedal = (progressI==2 && !state.FirstStepMedal && !fromCheat && !previous_state.FirstStepMedal);
+        return state.FirstStepMedal;
+    })
+);
+
+achievements.push(new Achievement(
+    "Master of Links", 
+    "You really cicked on everything??",  
+    function() {
+        state.MasterOfLinks = numClicks > 1000;
+        return state.MasterOfLinks;
+    })
+);
+
+achievements.push(new Achievement(
+    "Shadow traveler", 
+    "Either lucky, crazy or a cheater. But well done anyway!",  
+    function() {
+        state.HiddenPathMedal = numClicks > 1000;
+        return state.HiddenPathMedal;
+    })
+);
+
+achievements.push(new Achievement(
+    "App User", 
+    "It is something :D",  
+    function() {
+        state.AppUserMed = numClicks > 1000;
+        return state.AppUserMed;
+    })
+);
+
+achievements.push(new Achievement(
+    "Socializer", 
+    "Just send me a messagge if that is not done yet, or you will look like a stalker.",  
+    function() {
+        state.Socializer = numClicks > 1000;
+        return state.Socializer;
+    })
+);
+
+achievements.push(new Achievement(
+    "Game tester", 
+    "Well... thank you for caring about my projects. Any review would be awesome!", 
+    function() {
+        state.GameTester = numClicks > 1000;
+        return state.GameTester;
+    })
+);
+
+achievements.push(new Achievement(
+    "Code digger", 
+    "Hope you will like what you will see!", 
+    function() {
+        state.CodeDigger = numClicks > 1000;
+        return state.CodeDigger;
+    })
+);
+
+var icons = ["glass", "music", "search", "heart", "star", "user", "film", "trash", "road", "list-alt", "camera", "screenshot", "plane", "comment"];
+var divEl = $('.ach-area');
+var numClicks = 0;
+var totalDiscover = $('t[data-o]').length + 1;
+var progressI = 1;
+var SAVE_KEY = 'save';
+var fromCheat = false;
+
+//Save funcction. Use localStorage for small project with few variables (can lag if too heavy)
+function save() {
+  localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+  //UpdateAchievements();
+}
+//Load on accessing the page
+function load() {
+  return JSON.parse(localStorage.getItem(SAVE_KEY));
+}
+
+//Function to start again from blank
+function restart(){
+    eraseLocalStorage();
+    window.alert('Back to the beginning!');
+    console.log('Back to the beginning!');
+    InitValueState(); //Only for debug
+    UpdateAchievements();  
+}
+
+//Erase save "state" variable (the only one used for this website) from local storage
+function eraseLocalStorage(){
+    localStorage.removeItem(SAVE_KEY);
+}
+
+//Give to "state" variable its default settings
+function InitValueState(){
+    state.NbfSecrets = 0;
+    state.ExplorerMedal = false;
+    state.FirstStepMedal = false;
+    state.MasterOfLinks = false;
+    state.HiddenPathMedal = false;
+    state.AppUserMed = false;
+    state.BreakoutLevel = 0;
+    state.Socializer = false;
+    state.GameTester = false;
+    state.CodeDigger = false; 
+}
+
+function UpdateAchievements(){
+
+    /*
+    if(!previous_state.ExplorerMedal && state.ExplorerMedal){
+        window.alert('You are a grown exlorer now!');
+        console.log('You are a grown exlorer now!');
+    }
+    if(!previous_state.FirstStepMedal && state.FirstStepMedal){
+        console.log('Your first steps... Everything starts from here.');
+        window.alert('Your first steps... Everything starts from here.');
+    }
+    if(!previous_state.MasterOfLinks && state.MasterOfLinks){
+        console.log('You really cicked on everything??');
+        window.alert('You really cicked on everything??');
+    }
+    if(!previous_state.HiddenPathMedal && state.HiddenPathMedal){
+        console.log('Either lucky, crazy or a cheater. But well done anyway!');
+        window.alert('Either lucky, crazy or a cheater. But well done anyway!');
+    }
+    if(!previous_state.AppUserMed && state.AppUserMed){
+        console.log('It is something :D');
+        window.alert('It is something :D');
+    }
+    if(!previous_state.Socializer && state.Socializer){
+        console.log('Just send me a messagge if that is not done yet, or you will look like a stalker.');
+        window.alert('Just send me a messagge if that is not done yet, or you will look like a stalker.');
+    }
+    if(!previous_state.GameTester && state.GameTester){
+        console.log('Well... thank you for caring about my projects. Any review would be awesome!');
+        window.alert('Well... thank you for caring about my projects. Any review would be awesome!');
+    }
+    if(!previous_state.CodeDigger && state.CodeDigger){
+        console.log('Hope you liked what you saw!'); 
+        window.alert('Hope you liked what you saw!'); 
+    }
+    */
+
+    var unlock = false;
+
+    achievements.forEach(function(achievement) {
+        if (achievement.checkFunction()) {
+              achievement.medal = true;
+              window.alert(achievement.name + " \n" + achievement.text);
+              console.log(achievement.name + " \n" + achievement.text);
+              unlock = true;  
+              $('<div id="temp" class="ani_div grad">' +
+                '<div class="ani_icon">' +
+                '<achiev-span class="glyphicon glyphicon-'+randomIcon()+' glyphicon-size"></achiev-span>' +
+                '</div>' +
+                '<achiev-span>Achievement Unlocked: ' + achievement.name + '!<br>' +
+                '<achiev-span>'+achievement.text+'</achiev-span>' +
+                '</achiev-span>' +
+                '</div>').appendTo(divEl);
+              $(".ani_icon").css("background-color", "#"+randomColor());
+              $(".glyphicon-size").css("color", "#"+randomColor());
+        }
+   });
+
+   if(unlock){
+       save();
+   }
+
+    Equal(previous_state,state);
+}
 
 //Function to update the progress bar
 function move(percent) {
@@ -213,3 +444,33 @@ function move(percent) {
     elem.style.width = width + "%";
     elem.innerHTML = width + "%";
 }
+
+//Load state if exist:
+if(localStorage.getItem(SAVE_KEY)){
+    state = load();
+    Equal(previous_state,state);
+    UpdateAchievements();
+}
+
+//Make state variables equal
+function Equal(to, from){
+    to.NbfSecrets = from.NbfSecrets;
+    to.ExplorerMedal = from.ExplorerMedal;
+    to.FirstStepMedal = from.FirstStepMedal;
+    to.MasterOfLinks = from.MasterOfLinks;
+    to.HiddenPathMedal = from.HiddenPathMedal;
+    to.AppUserMed = from.AppUserMed;
+    to.BreakoutLevel = from.BreakoutLevel;
+    to.Socializer = from.Socializer;
+    to.GameTester = from.GameTester;
+    to.CodeDigger = from.CodeDigger;  
+}
+
+function randomIcon(){
+    var l = Math.floor(Math.random()*icons.length);
+    return icons[l];
+  }
+
+  function randomColor(){
+    return Math.random().toString(16).substr(-6);
+  }
