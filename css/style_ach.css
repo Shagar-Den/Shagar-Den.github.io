@@ -1,16 +1,22 @@
 .ach-area {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: fixed;
+    z-index: 4;
+    top: 15%;
+    left: 5%;
     overflow-y: hidden;
   }
 
   .ani_div {
-    width: 256px;
-    height: 100px;
+    width: auto;
+    height: auto;
     background-color: #30302e;
     line-height: 100px;
-    animation: 3s ease 0s 1 slideInFromBottom;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5em;
+    animation: 3s ease 0s 1 slideInFromTopSlideOutFromLeft;
   }
 
   @keyframes slideInFromBottom {
@@ -18,6 +24,20 @@
     10% {transform: translateY(0%);}
     90% {transform: translateY(0%);}
     100% {transform: translateY(100%);}
+  }
+
+  @keyframes slideInFromTop {
+    0% {transform: translateY(-100%);}
+    10% {transform: translateY(0%);}
+    90% {transform: translateY(0%);}
+    100% {transform: translateY(-100%);}
+  }
+
+  @keyframes slideInFromTopSlideOutFromLeft {
+    0% {transform: translateY(-100%);}
+    10% {transform: translateY(0%);}
+    90% {transform: translateX(0%);}
+    100% {transform: translateX(-100%);}
   }
 
   .ani_icon {
@@ -32,21 +52,37 @@
   
   .grad {
     background: #30302e; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#30302e, #1a1a17); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#30302e, #1a1a17); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#30302e, #1a1a17); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#30302e, #1a1a17); /* Standard syntax */
+    background: linear-gradient(#d85720e0, #000000e0); /* Standard syntax */
   }
   
   .glyphicon-size {
     font-size: 36px;
   }
 
-  .achiev-span {
+  achiev-span {
     color: white;
     font-size: 12px;
     font-family: helvetica;
     display: inline-block;
     vertical-align: middle;
+    line-height: 32px;
+  }
+
+  .ani_div span{
+    color: white;
+    font-size: 12px;
+    font-family: helvetica;
+    display: inline-block;
+    margin-right: 0.75em;
+    /*vertical-align: middle;*/
+    line-height: 32px;
+  }
+
+  .ani_icon span{
+    color: white;
+    font-size: 12px;
+    font-family: helvetica;
+    display: block;
+    /*vertical-align: middle;*/
     line-height: 32px;
   }

@@ -258,8 +258,12 @@ achievements.push(new Achievement(
     "Explorer", 
     "You are a grown exlorer now!", 
     function() {
-        state.ExplorerMedal = (progressI==totalDiscover && !state.ExplorerMedal && !fromCheat && !previous_state.ExplorerMedal);
-        return state.ExplorerMedal;
+        var cond = (progressI==totalDiscover && !state.ExplorerMedal && !fromCheat && !previous_state.ExplorerMedal);
+        if (cond && !state.ExplorerMedal){
+            state.ExplorerMedal = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -267,8 +271,12 @@ achievements.push(new Achievement(
     "Curious", 
     "Your first steps... Everything starts from here.",
     function() {
-        state.FirstStepMedal = (progressI==2 && !state.FirstStepMedal && !fromCheat && !previous_state.FirstStepMedal);
-        return state.FirstStepMedal;
+        var cond = (progressI==2 && !state.FirstStepMedal && !fromCheat && !previous_state.FirstStepMedal);
+        if (cond && !state.FirstStepMedal){
+            state.FirstStepMedal = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -276,8 +284,12 @@ achievements.push(new Achievement(
     "Master of Links", 
     "You really cicked on everything??",  
     function() {
-        state.MasterOfLinks = numClicks > 1000;
-        return state.MasterOfLinks;
+        var cond = numClicks > 1000;
+        if (cond && !state.MasterOfLinks){
+            state.MasterOfLinks = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -285,8 +297,12 @@ achievements.push(new Achievement(
     "Shadow traveler", 
     "Either lucky, crazy or a cheater. But well done anyway!",  
     function() {
-        state.HiddenPathMedal = numClicks > 1000;
-        return state.HiddenPathMedal;
+        var cond = numClicks > 1000;
+        if (cond && !state.HiddenPathMedal){
+            state.HiddenPathMedal = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -294,8 +310,12 @@ achievements.push(new Achievement(
     "App User", 
     "It is something :D",  
     function() {
-        state.AppUserMed = numClicks > 1000;
-        return state.AppUserMed;
+        var cond = numClicks > 1000;
+        if (cond && !state.AppUserMed){
+            state.AppUserMed = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -303,8 +323,12 @@ achievements.push(new Achievement(
     "Socializer", 
     "Just send me a messagge if that is not done yet, or you will look like a stalker.",  
     function() {
-        state.Socializer = numClicks > 1000;
-        return state.Socializer;
+        var cond = numClicks > 1000;
+        if (cond && !state.Socializer){
+            state.Socializer = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -312,17 +336,12 @@ achievements.push(new Achievement(
     "Game tester", 
     "Well... thank you for caring about my projects. Any review would be awesome!", 
     function() {
-        state.GameTester = numClicks > 1000;
-        return state.GameTester;
-    })
-);
-
-achievements.push(new Achievement(
-    "Code digger", 
-    "Hope you will like what you will see!", 
-    function() {
-        state.CodeDigger = numClicks > 1000;
-        return state.CodeDigger;
+        var cond = numClicks > 1000;
+        if (cond && !state.GameTester){
+            state.GameTester = cond;
+            return cond;
+        }
+        return false;
     })
 );
 
@@ -414,19 +433,13 @@ function UpdateAchievements(){
     achievements.forEach(function(achievement) {
         if (achievement.checkFunction()) {
               achievement.medal = true;
-              window.alert(achievement.name + " \n" + achievement.text);
-              console.log(achievement.name + " \n" + achievement.text);
+              //window.alert(achievement.name + " \n" + achievement.text);
+              //console.log(achievement.name + " \n" + achievement.text);
               unlock = true;  
-              $('<div id="temp" class="ani_div grad">' +
-                '<div class="ani_icon">' +
-                '<achiev-span class="glyphicon glyphicon-'+randomIcon()+' glyphicon-size"></achiev-span>' +
-                '</div>' +
-                '<achiev-span>Achievement Unlocked: ' + achievement.name + '!<br>' +
-                '<achiev-span>'+achievement.text+'</achiev-span>' +
-                '</achiev-span>' +
-                '</div>').appendTo(divEl);
-              $(".ani_icon").css("background-color", "#"+randomColor());
-              $(".glyphicon-size").css("color", "#"+randomColor());
+              AddToDiv(achievement.name,achievement.text,divEl);
+              setTimeout(function () {
+                remove()
+              }, 2950);
         }
    });
 
@@ -436,6 +449,42 @@ function UpdateAchievements(){
 
     Equal(previous_state,state);
 }
+
+//Manually call an achievement popup
+$('.achievementpop').click(function() {
+    //AddToDiv('Developper','It works !',divEl);
+    var l = Math.floor(Math.random()*achievements.length);
+    AddToDiv(achievements[l].name, achievements[l].text,divEl);
+    setTimeout(function () {
+                remove()
+    }, 2950);
+  });
+
+
+//Function to add element for achievement popup
+function AddToDiv(title, text, div){
+    $('<div id="temp" class="ani_div grad">' +
+                '<div class="ani_icon">' +
+                '<span class="glyphicon glyphicon-'+randomIcon()+' glyphicon-size"></span>' +
+                '</div>' +
+                '<span>Achievement Unlocked: ' + title + '<br>' +
+                '<span>'+text+'</span>' +
+                '</span>' +
+                '</div>').appendTo(div);
+              $(".ani_icon").css("background-color", "#"+randomColor());
+              $(".glyphicon-size").css("color", "#"+randomColor());
+}
+
+function remove(){
+    $(temp).remove();
+}
+/*
+const remove = el => el.parentElement.removeChild(el);
+
+function RemoveDivFromParent(div) {
+    var child = document.querySelector(div);
+    remove(child);
+}*/
 
 //Function to update the progress bar
 function move(percent) {
