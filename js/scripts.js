@@ -393,41 +393,6 @@ function InitValueState(){
 
 function UpdateAchievements(){
 
-    /*
-    if(!previous_state.ExplorerMedal && state.ExplorerMedal){
-        window.alert('You are a grown exlorer now!');
-        console.log('You are a grown exlorer now!');
-    }
-    if(!previous_state.FirstStepMedal && state.FirstStepMedal){
-        console.log('Your first steps... Everything starts from here.');
-        window.alert('Your first steps... Everything starts from here.');
-    }
-    if(!previous_state.MasterOfLinks && state.MasterOfLinks){
-        console.log('You really cicked on everything??');
-        window.alert('You really cicked on everything??');
-    }
-    if(!previous_state.HiddenPathMedal && state.HiddenPathMedal){
-        console.log('Either lucky, crazy or a cheater. But well done anyway!');
-        window.alert('Either lucky, crazy or a cheater. But well done anyway!');
-    }
-    if(!previous_state.AppUserMed && state.AppUserMed){
-        console.log('It is something :D');
-        window.alert('It is something :D');
-    }
-    if(!previous_state.Socializer && state.Socializer){
-        console.log('Just send me a messagge if that is not done yet, or you will look like a stalker.');
-        window.alert('Just send me a messagge if that is not done yet, or you will look like a stalker.');
-    }
-    if(!previous_state.GameTester && state.GameTester){
-        console.log('Well... thank you for caring about my projects. Any review would be awesome!');
-        window.alert('Well... thank you for caring about my projects. Any review would be awesome!');
-    }
-    if(!previous_state.CodeDigger && state.CodeDigger){
-        console.log('Hope you liked what you saw!'); 
-        window.alert('Hope you liked what you saw!'); 
-    }
-    */
-
     var unlock = false;
 
     achievements.forEach(function(achievement) {
@@ -478,13 +443,6 @@ function AddToDiv(title, text, div){
 function remove(){
     $(temp).remove();
 }
-/*
-const remove = el => el.parentElement.removeChild(el);
-
-function RemoveDivFromParent(div) {
-    var child = document.querySelector(div);
-    remove(child);
-}*/
 
 //Function to update the progress bar
 function move(percent) {
@@ -500,6 +458,7 @@ if(localStorage.getItem(SAVE_KEY)){
     Equal(previous_state,state);
     UpdateAchievements();
 }
+tagLinks();
 
 //Make state variables equal
 function Equal(to, from){
@@ -514,6 +473,18 @@ function Equal(to, from){
     to.GameTester = from.GameTester;
     to.CodeDigger = from.CodeDigger;  
 }
+
+//Function to prepare links related achievements
+function tagLinks(){
+    if(!state.MasterOfLinks){
+        $("a").addClass('unchecked');
+    }
+}
+
+$(".unchecked").click(function() {
+    this.removeClass('unchecked');
+    this.addClass('checked');
+  });
 
 function randomIcon(){
     var l = Math.floor(Math.random()*icons.length);
