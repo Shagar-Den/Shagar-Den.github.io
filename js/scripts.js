@@ -420,9 +420,9 @@ $('.achievementpop').click(function() {
     //AddToDiv('Developper','It works !',divEl);
     var l = Math.floor(Math.random()*achievements.length);
     AddToDiv(achievements[l].name, achievements[l].text,divEl);
-    setTimeout(function () {
+    /*setTimeout(function () {
                 remove()
-    }, 2950);
+    }, 2950);*/
   });
 
 
@@ -430,14 +430,14 @@ $('.achievementpop').click(function() {
 function AddToDiv(title, text, div){
     $('<div id="temp" class="ani_div grad">' +
                 '<div class="ani_icon">' +
-                '<span class="glyphicon glyphicon-'+randomIcon()+' glyphicon-size"></span>' +
+                '<span class="glyphicon glyphicon-'+randomIcon()+' glyphicon-size"><img src="assets/img/icons/'+title+'.png" alt="'+title+'"></span>' +
                 '</div>' +
                 '<span>Achievement Unlocked: ' + title + '<br>' +
                 '<span>'+text+'</span>' +
                 '</span>' +
                 '</div>').appendTo(div);
-              $(".ani_icon").css("background-color", "#"+randomColor());
-              $(".glyphicon-size").css("color", "#"+randomColor());
+              //$(".ani_icon").css("background-color", "#"+randomColor());
+              //$(".glyphicon-size").css("color", "#"+randomColor());
 }
 
 function remove(){
