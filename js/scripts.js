@@ -482,8 +482,8 @@ function tagLinks(){
 }
 
 $(".unchecked").click(function() {
-    this.removeClass('unchecked');
-    this.addClass('checked');
+    this.classList.remove('unchecked');
+    this.classList.add('checked');
   });
 
 function randomIcon(){
