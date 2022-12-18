@@ -7,7 +7,7 @@ body {
   #gameCanvas {
     display: block;
     margin: auto;
-    background-color: black;
+    background-color: #82430d8c;
     
     /* positionnement du canvas en haut de la page */
     position: absolute;
