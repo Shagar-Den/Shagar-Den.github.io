@@ -110,6 +110,10 @@
                     startHint = false;
                     firstTime = false;
                 }
+
+                if($('[data-cb="' + ob +'"]').length !== 0){
+                    $('[data-cb="' + ob +'"]').removeClass('on').addClass('off');
+                }
             });
 
             if($('[data-obi="' + openedbyArr[0] +'"]').length !== 0){
@@ -167,6 +171,9 @@
 	  $('.show_all').click(function() {
 		$('[data-ob]').removeClass('off').addClass('on');
 		$('[data-obi]').removeClass('off').addClass('on');
+        $('[data-obu]').removeClass('off').addClass('on');
+        $('[data-cb]').removeClass('on').addClass('off');
+		$('t[data-o]').removeClass('on').addClass('off');
 		cheatOnProgress();
 	  });
 	  
@@ -232,6 +239,18 @@
 				var percentI = progressI/totalDiscover;
 				move(Math.round(percentI*100));
 			}
+            if(progressI==1){
+                document.getElementById("hideButt").classList.add('btn-off');
+                document.getElementById("showButt").classList.remove('btn-off');
+            }
+            else if(progressI==totalDiscover){
+                document.getElementById("showButt").classList.add('btn-off');
+                document.getElementById("hideButt").classList.remove('btn-off');
+            }
+            else{
+                document.getElementById("showButt").classList.remove('btn-off');
+                document.getElementById("hideButt").classList.remove('btn-off');
+            }
             /*if(progressI==2 && !state.FirstStepMedal && !fromCheat){
                 state.FirstStepMedal = true;
                 save();

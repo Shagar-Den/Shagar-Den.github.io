@@ -507,6 +507,24 @@ header.masthead .masthead-heading {
   border-radius: 100%;
   margin: .5rem;
 }
+
+.btn-square {
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  margin: .5rem;
+  color: #d85720;
+  border-radius: 2px;
+}
+
+.btn-square:hover {
+  background-color: #23272b31; 
+}
+
+.btn-off{
+  display : none;
+}
+
 /*---------------------------Boxes and Buttons  END---------------------------------------*/
 
 /*---------------------------Links  END---------------------------------------*/
@@ -661,6 +679,27 @@ a {
 
 /*---------------------------Navbar END---------------------------------------*/
 
+
+/*---------------------------Footer BEGIN---------------------------------------*/
+.footer {
+  padding-top: 0.3rem;
+  padding-bottom: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+}
+
+.center{
+  margin: auto;
+}
+/*---------------------------Footer END---------------------------------------*/
 
 /*---------------------------Entry BEGIN---------------------------------------*/
 .entry{
