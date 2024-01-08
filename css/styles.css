@@ -253,6 +253,10 @@ img{
   margin: .5rem;
 }
 
+.switch-container {
+  align-self: baseline;
+}
+
 /* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
@@ -268,7 +272,7 @@ spec.slider {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #343a40;
+  background-color: #23272b;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -560,9 +564,10 @@ a {
   display: flex;
   flex-direction: column;
   padding-left: 0;
-  margin-bottom: 0;
+  margin-bottom: 3px;
   list-style: none;
-  margin-left: auto
+  margin-left: auto;
+  margin-top: 4px
 }
 .navbar-nav .dropdown-menu {
   position: static;
@@ -717,6 +722,10 @@ transform: translate(0, -10px);
 
 .entry a:hover .overlay .title{
 transform: translate(0, 0);
+}
+
+.stretch{
+  align-self: stretch;
 }
 /*---------------------------Entry END---------------------------------------*/
 
