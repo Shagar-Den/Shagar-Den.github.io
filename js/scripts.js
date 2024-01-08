@@ -53,11 +53,13 @@
         e.preventDefault();
 		
 		if($(this).attr('class') == "on"){
-			var openedby = $(this).attr('data-o');
-			var closedby = $(this).attr('data-c');
+			var openedby = $(this).attr('data-o');//.split(',');
+			//var closedby = $(this).attr('data-c');//.split(',');
+            var openedbyArr = openedby.split(',');
+            //var closedbyArr = closedby.split(',');
 			
 			$(this).removeClass('on').addClass('off');
-			
+			/*
 			if($('[data-ob="' + openedby +'"]').length !== 0){
 				$('[data-ob="' + openedby +'"]').removeClass('off').addClass('on');
 			}
@@ -85,7 +87,48 @@
 			if($('[data-cb="' + closedby +'"]').length !== 0){
 				$('[data-cb="' + closedby +'"]').remove();
 			}
-			
+            */
+           //console.log(openedby);
+           //console.log(openedbyArr);
+           openedbyArr.forEach(function(ob) {
+                console.log(ob);
+                if($('[data-ob="' + ob +'"]').length !== 0){
+                    $('[data-ob="' + ob +'"]').removeClass('off').addClass('on');
+                }
+                if($('[data-obu="' + ob +'"]').length !== 0){
+                    $('[data-obu="' + ob +'"]').removeClass('off').addClass('on');
+                }    
+                
+                if($('[data-obi="' + ob +'"]').length !== 0){
+                    $('[data-obi="' + ob +'"]').removeClass('off').addClass('on');
+                }
+                
+        
+                if($('[id="' + ob +'-hint"]').length !== 0){
+                    $('[id="' + ob +'-hint"]').removeClass('on').addClass('off');
+                    hasSeenTrick = true;
+                    startHint = false;
+                    firstTime = false;
+                }
+            });
+
+            if($('[data-obi="' + openedbyArr[0] +'"]').length !== 0){
+                $("html, body").animate(
+                    {
+                        scrollTop: $('[data-obi="' + openedbyArr[0] +'"]').offset().top - 72,
+                    },
+                    1000,
+                    "easeInOutExpo"
+                );
+            }
+        
+            /*
+            closedbyArr.forEach(function(cb) {
+                if($('[data-cb="' + cb +'"]').length !== 0){
+                    $('[data-cb="' + cb +'"]').remove();
+                }
+            });
+			*/
 			update();
 		}
 		
