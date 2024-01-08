@@ -82,8 +82,9 @@ document.getElementById("firstapiBtn").addEventListener("click", function() {
 //----------------------------------------------------------------------
 
 //-----------------------API used for the second part:-----------------------
-var apiAnswer2 = document.getElementById('foodImg');
-fetch("https://foodish-api.herokuapp.com/api/")
+var apiAnswer2 = document.getElementById('foxImg');
+//fetch("https://foodish-api.herokuapp.com/api/") //Does not work anymore
+fetch("https://randomfox.ca/floof/")
   .then(response => response.json())
   .then(response => {apiAnswer2.setAttribute("src", response.image)})
   .catch((err) => {
