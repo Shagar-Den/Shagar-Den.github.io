@@ -77,6 +77,7 @@ p {
 /*---------------------------Section BEGIN---------------------------------------*/
 section {
   display: block;
+  margin: 0px 0px 0px 70px;
 }
 
 .page-section {
@@ -453,19 +454,21 @@ header.masthead .masthead-heading {
 
 /*---------------------------Boxes and Buttons BEGIN---------------------------------------*/
 .box {
-  border-radius: 5px;
+  border-radius: 25px;
   background-color: grey;
   opacity: 0.9;
-  height: 3.5em;
+  height: 15.5em;
   position: fixed;
   z-index: 1;
   left: 0.5%;
-  bottom: 20%;
+  bottom: 30%;
   justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
 }
 
 .boxDarkMode {
-  border-radius: 5px;
+  border-radius: 25px;
   opacity: 0.9;
   width: auto;
   position: fixed;
