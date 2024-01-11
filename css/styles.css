@@ -521,30 +521,32 @@ header.masthead .masthead-heading {
   background-color: #23272b31; 
 }
 
-.btn-off{
-  display : none;
+.btn-disabled{
+  color: #eee;
+  background-color: #5d6063;
+  border-color: #5d6063;
 }
 
 .pulse-box{
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
 	transform: scale(1);
-	animation: pulse 2s;
+	animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
 	0% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(92, 92, 92, 0.7);
 	}
 
 	70% {
-		transform: scale(1);
-		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+		transform: scale(1.1);
+		box-shadow: 0 0 0 20px rgba(92, 92, 92, 0);
 	}
 
 	100% {
-		transform: scale(0.95);
-		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(92, 92, 92, 0);
 	}
 }
 

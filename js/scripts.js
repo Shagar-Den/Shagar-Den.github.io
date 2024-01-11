@@ -45,6 +45,7 @@
     var hasSeenTrick = true;
     var startHint = false;
     var firstTime = true;
+    var pulseCalled = false;
 
 	//this is the bit of code that makes the whole opening and closing text thing work.
 	  $('t[data-o]').click(function(e) {
@@ -174,6 +175,10 @@
         $('[data-obu]').removeClass('off').addClass('on');
         $('[data-cb]').removeClass('on').addClass('off');
 		$('t[data-o]').removeClass('on').addClass('off');
+        $("#first-hint").removeClass('on').addClass('off');
+        hasSeenTrick = true;
+        startHint = false;
+        firstTime = false;
 		cheatOnProgress();
 	  });
 	  
@@ -232,6 +237,42 @@
 				$("#UnityImg").attr("src", "assets/img/logos/unity-mwu-black.png");
 			}
         });
+
+
+        //This function is to make social box pulse on click
+		$(".trigger_pusle_box").click(function(){
+            //console.log("before adding class");
+            if(!pulseCalled){
+                pulseCalled = true;
+                document.getElementById("socialBox").classList.add("pulse-box");
+                removeClassAfterDelay(2000,"socialBox","pulse-box");
+            };
+        });
+
+        function resolveAfterNSeconds(delay) {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve("finished");
+              }, delay);
+            });
+        }
+
+        async function removeClassAfterDelay(delay,idName,className){
+            try {
+                await resolveAfterNSeconds(delay);
+                pulseCalled=false;
+                const element = document.getElementById(idName);
+                if (element) {
+                    element.classList.remove(className);
+                    //console.log("After removing class " + idName + ": " + className);
+                } else {
+                    console.log("Element with id '" + idName + "' was not found.");
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        }
+
 		
 		function update(){
             progressI++;
@@ -240,16 +281,28 @@
 				move(Math.round(percentI*100));
 			}
             if(progressI==1){
-                document.getElementById("hideButt").classList.add('btn-off');
-                document.getElementById("showButt").classList.remove('btn-off');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-dark');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
             }
             else if(progressI==totalDiscover){
-                document.getElementById("showButt").classList.add('btn-off');
-                document.getElementById("hideButt").classList.remove('btn-off');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-dark');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
             }
             else{
-                document.getElementById("showButt").classList.remove('btn-off');
-                document.getElementById("hideButt").classList.remove('btn-off');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
             }
             /*if(progressI==2 && !state.FirstStepMedal && !fromCheat){
                 state.FirstStepMedal = true;
