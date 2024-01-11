@@ -60,39 +60,12 @@
             //var closedbyArr = closedby.split(',');
 			
 			$(this).removeClass('on').addClass('off');
-			/*
-			if($('[data-ob="' + openedby +'"]').length !== 0){
-				$('[data-ob="' + openedby +'"]').removeClass('off').addClass('on');
-			}
-			if($('[data-obu="' + openedby +'"]').length !== 0){
-				$('[data-obu="' + openedby +'"]').removeClass('off').addClass('on');
-			}
-			if($('[data-obi="' + openedby +'"]').length !== 0){
-				$('[data-obi="' + openedby +'"]').removeClass('off').addClass('on');
-				$("html, body").animate(
-					{
-						scrollTop: $('[data-obi="' + openedby +'"]').offset().top - 72,
-					},
-					1000,
-					"easeInOutExpo"
-				);
-            }
-            if($('[id="' +openedby +'-hint"]').length !== 0){
-                $('[id="' +openedby +'-hint"]').removeClass('on').addClass('off');
-                hasSeenTrick = true;
-                startHint = false;
-                firstTime = false;
-			}
-			
-			
-			if($('[data-cb="' + closedby +'"]').length !== 0){
-				$('[data-cb="' + closedby +'"]').remove();
-			}
-            */
+
            //console.log(openedby);
            //console.log(openedbyArr);
+
            openedbyArr.forEach(function(ob) {
-                console.log(ob);
+                //console.log(ob);
                 if($('[data-ob="' + ob +'"]').length !== 0){
                     $('[data-ob="' + ob +'"]').removeClass('off').addClass('on');
                 }
@@ -126,14 +99,7 @@
                     "easeInOutExpo"
                 );
             }
-        
-            /*
-            closedbyArr.forEach(function(cb) {
-                if($('[data-cb="' + cb +'"]').length !== 0){
-                    $('[data-cb="' + cb +'"]').remove();
-                }
-            });
-			*/
+
 			update();
 		}
 		
@@ -304,14 +270,7 @@
                 document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('hide_all');
                 document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
             }
-            /*if(progressI==2 && !state.FirstStepMedal && !fromCheat){
-                state.FirstStepMedal = true;
-                save();
-            }
-            if(progressI==totalDiscover && !state.ExplorerMedal && !fromCheat){
-                state.ExplorerMedal = true;
-                save();
-            }*/
+            
             UpdateAchievements();
 		}
 		function resetProgress(){
