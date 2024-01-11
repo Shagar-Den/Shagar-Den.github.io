@@ -4,7 +4,7 @@
 This code takes inspiration from https://dreamirl.com/, https://novelab.net/fr/, http://www.mikiyakobayashi.com/projects/, https://soreine.dev/ and https://alantrotter.com/ source code, it would be presonptuous of me to say I did anything new
 Please enjoy, and feel free to give any feedback.
 -->
-
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -12,34 +12,25 @@ Please enjoy, and feel free to give any feedback.
         <overlay name="description" content="" />
         <overlay name="author" content="" />
         <title>Shagar personal space</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/logos/Logoperso.png"/>
+        <link rel="icon" type="image/x-icon" href="assets/img/logos/LogoNew.png"/>
         <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Robot+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
 		<link href="css/styles.css?version=1" rel="stylesheet" />
 		<link href="css/style_ach.css?version=2" rel="stylesheet" />
-		<!--
-		<link rel="preload" as="image" href="assets/img/icons/Logo_app.png">
-		<link rel="preload" as="image" href="assets/img/icons/reminiscence.png">
-		<link rel="preload" as="image" href="assets/img/icons/Logo_squaryProto.png">
-		<link rel="preload" as="image" href="assets/img/icons/BM.png">
-		<link rel="preload" as="image" href="assets/img/icons/BATGS.png">
-		-->
     </head>
     <body id="page-top">
 		<!-- Navigation-->
 		<span data-ob="first">
 		<nav class="navbar navbar-expand" id="mainNav">
 		  <div class="container">   
-			<a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logos/LogoPersoEntete.png" alt="Shagar logo" /></a>
+			<a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logos/LogoNew.png" alt="Shagar logo" /></a>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars ml-1"></i></button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 			  <ul class="navbar-nav text-uppercase ml-auto">
 				<div class="nav-item"><a class="nav-link js-scroll-trigger" href="#intro">Introduction</a></div>
-				<span data-ob="chapterApp"><div class="nav-item"><a class="nav-link js-scroll-trigger" href="#app">Apps</a></div></span>
 				<span data-ob= "chapterGames"><div class="nav-item"><a class="nav-link js-scroll-trigger" href="#game">Games</a></div></span>
-				<span data-ob= "chapterDraw"><div class="nav-item"><a class="nav-link js-scroll-trigger" href="#draw">Drawings</a></div></span>
+				<span data-ob="chapterOther"><div class="nav-item"><a class="nav-link js-scroll-trigger" href="#other">Other</a></div></span>
 				<span data-ob= "moi"><div class="nav-item"><a class="nav-link js-scroll-trigger" href="#self">Me</a></div></span>
 			  </ul>
 			</div>
@@ -53,6 +44,16 @@ Please enjoy, and feel free to give any feedback.
 		  </div>
 		</nav>		
 		</span>
+
+
+		<span data-cb="first" class="on">
+			<nav class="footer" id="quick_show_all">
+				<div class="center">
+					<div class="big_sreen_element show_all btn-square">I don't have time, show me everything.</div>
+				</div>
+			</nav>		
+		</span>
+
 		<!--Achievements-->
 		<!--Message-->
 		<div class="ach-area"></div>
@@ -79,27 +80,18 @@ Please enjoy, and feel free to give any feedback.
 		<!--Medals-->
 		<!--Achievements-->
 		<nav class="boxDarkMode" id="forDarkMode">
-			<!--
-			<div><div class="btn-dark btn-text">
-					Dark Mode:
-					<label class="switch">
-						<input type="checkbox">
-						<spec class="slider round"></spec>
-					</label>
-			</div></div>
-			-->
 			<!--<div><div class="big_sreen_element erase_localstorage btn-dark btn-text">Erase local storage</div></div>
 			<div><div class="big_sreen_element achievementpop btn-dark btn-text">Pop achievement</div></div>-->
 			<span data-obu="first">
-			<div><div class="big_sreen_element show_all btn-dark btn-text">Show everything</div></div>
-			<div><div class="big_sreen_element hide_all btn-dark btn-text">Hide everything</div></div>
+			<div id="showButt"><div class="big_sreen_element show_all btn-dark btn-text">Show everything</div></div>
+			<div id="hideButt"><div class="big_sreen_element hide_all btn-dark btn-text">Hide everything</div></div>
 			<div class="big_sreen_element">Website uncover:
 			<div id="visitorProgress">
 				<div id="TheBar">13%</div>
 			</div></div>
 			</span>
 		</nav>
-		<span data-ob = "moi">
+		<span data-ob = "first">
 		  <div class="box" id="socialBox">
 			<a class="btn-dark btn-social" href="https://www.linkedin.com/in/sylvain-gaborit-5573861b5" target="_blank"><i class="fab fa-linkedin-in"></i></a>
 			<a class="btn-dark btn-social" href="https://github.com/Sylvaingbrt" target="_blank"><i class="fab fa-github"></i></a>
@@ -110,79 +102,92 @@ Please enjoy, and feel free to give any feedback.
 		<!-- Masthead-->
 		<header class="masthead">
 		  <div class="container">
-			<img src="assets/img/logos/Logoperso.png" alt="Shagar logo">
+			<img src="assets/img/logos/LogoNew.png" alt="Shagar logo">
 			<div class="masthead-subheading">Playground of a young <t data-o = "first" class = "on"><hint class = "off" id="first-hint"></hint>developer</t></div>
 		  </div>
 		</header>
 		<!--Chapters-->
 		<span data-obi="first" id="first">
 		<section class="page-section" id="intro">
+		  	<div class="container">
+				<h1 class="section-heading text-uppercase">Introduction</h1>
+				<div class="section-subheading text-muted">
+					Welcome to <t data-o = "moi" class="on">my</t> place!<br/>
+					This website was created in October 22 2020, to host my projects and play around.<br/>
+					From simple <t data-o = "chapterCode,chapterOther" class="on">code</t>, <t data-o = "chapterApp,chapterOther" class="on">applications</t> or <t data-o = "chapterGames" class ="on">games</t><!--and even <t data-o = "chapterDraw,chapterOther" class ="on">drawings</t>-->, you will find all of them here. And more will come.<br/>
+					Also you should find most of my code, including this website code, on my <a href="https://github.com/Sylvaingbrt" target="_blank">Github</a>.<br/>
+					Please take a look around, and enjoy!<br/>
+					<br/>
+				</div>
+			</div>
+		</section>
+		</span>
+		<span data-obi= "chapterGames">
+		<section class="page-section" id="game">
 		  <div class="container">
-			  <h1 class="section-heading text-uppercase">Introduction</h1>
+			  <h1 class="section-heading text-uppercase">Games</h1>
 			  <div class="section-subheading text-muted">
-				Welcome to <t data-o = "moi" class="on">my</t> place!<br/>
-				This website was created in October 22 2020, to host my projects and play around.<br/>
-				From simple <t data-o = "chapterCode" class="on">code</t>, <t data-o = "chapterApp" class="on">applications</t> or <t data-o = "chapterGames" class ="on">games</t> and even <t data-o = "chapterDraw" class ="on">drawings</t>, you will find all of them here. And more will come.<br/>
-				Also you should find most of my code, including this website code, on my Github.<br/>
-				Please take a look around, and enjoy!<br/>
-				<br/>
-			  <h2 class="text-dark text-center"><t data-o = "showPreview" class ="on">Preview</t> of what you should find in this page</h2>
-			</div>
-			<span data-ob="showPreview">
-			<div class="row text-center">
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/html.png" alt="html"> <!--image from https://www.iconfinder.com -->
+				Find here my games projects.<br/>
+				All in 2D and made with <a href="https://unity.com/" target="_blank">Unity</a>.<br/>
+				Try them all you want. Then you can tell me what you thought about them but do not forget to enjoy yourself here!<br/>
+				You can also find them on my page <a href="https://shagar220.itch.io/" target="_blank">itch.io</a>
+			  </div>
+			  <div class="row text-center">
+				<!--
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#Squary"><div class="Bckgrd">					
+						<img src="assets/img/icons/Logo_squaryProto.png" alt="Squary prototype"> <!-image from https://pixelbuddha.net/ on https://www.iconfinder.com ->
 						</div>
 						<div class="overlay">
-						<h1 class="title">HTML</h1>
+						<h1 class="title">Squary</h1>
 					</div></a>
 				</div>
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/css.png" alt="css">	<!--image from https://www.iconfinder.com/iconbaandar -->
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#BlobQueen"><div class="Bckgrd">					
+						<img src="assets/img/icons/BlobQueen.png" alt="A Blob Queen's Adventure">
 						</div>
 						<div class="overlay">
-						<h1 class="title">CSS</h1>
-					</div></a>
+						<h1 class="title">A Blob Queen's Adventure</h1> 
+					</div></a> 
 				</div>
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/js.png" alt="JS"> <!--image from https://www.freepik.com/flatart -->
+			-->
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#Lich"><div class="Bckgrd">					
+						<img src="assets/img/icons/Lich.png" alt="Lich Evaluation">
 						</div>
 						<div class="overlay">
-						<h1 class="title">JavaScript</h1>
+						<h1 class="title">The Lich's Evaluation</h1>
 					</div></a>
 				</div>
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/java.png" alt="Java"> <!--image from https://www.freepik.com/flatart -->
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#Bureaucrater"><div class="Bckgrd">					
+						<img src="assets/img/icons/BureaucratIcon.png" alt="Bureaucrater">
 						</div>
 						<div class="overlay">
-						<h1 class="title">Java</h1>
+						<h1 class="title">Bureaucratère</h1>
 					</div></a>
 				</div>
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/androidLogo.jpg" alt="Android"> <!--The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License.-->
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#ATF"><div class="Bckgrd">					
+						<img src="assets/img/icons/ATF.png" alt="After The Fall">
 						</div>
 						<div class="overlay">
-						<h1 class="title">Android<br/>Android Studio</h1>
+						<h1 class="title">After the Fall</h1>
 					</div></a>
 				</div>
-				<div class="entry col-3">　
-					<a><div class="Bckgrd">	
-						<img src="assets/img/logos/unity-mwu-black.png" alt="Unity" id="UnityImg"> <!--image from https://unity3d.com/fr/legal/branding_trademarks-->
+				<div class="entry col-1">　
+					<a class="trigger_popup" href="#Potion"><div class="Bckgrd">					
+						<img src="assets/img/icons/TPSIcon.png" alt="The Potion Seller">
 						</div>
 						<div class="overlay">
-						<h1 class="title">Unity</h1>
+						<h1 class="title">The Potion Seller</h1>
 					</div></a>
 				</div>
-			</div>
-			</span>
+			  </div>
 		  </div>
 		</section>
 		</span>
+		<span data-obi="chapterOther" id="other"></span>
 		<span data-obi="chapterCode">
 			<section class="page-section" id="code">
 				<div class="container">
@@ -195,9 +200,11 @@ Please enjoy, and feel free to give any feedback.
 						<div class="aProj"><a href="ThreeJS/">Test Three Js</a></div>
 						<div class="aProj"><a href="Breakout/">JS Breakout</a></div>
 						<div class="aProj"><a href="APITest/">APIs</a></div>
+						<!---
 						<div class="aProj"></div>
 						<div class="aProj"><a href="OpenAI/">Open AI</a></div>
 						<div class="aProj"></div>
+						-->
 					</div>
 				</div>
 			</section>
@@ -208,7 +215,7 @@ Please enjoy, and feel free to give any feedback.
 			  <h1 class="section-heading text-uppercase">Applications</h1>
 			  <div class="section-subheading text-muted">
 				This chapter will <a class="trigger_popup" href="#guide">guide</a> you to my apps projects, finished or still ongoing.<br/>
-				Most of them are for Android, cheers to Apple users.<br/>
+				Most of them will be for Android, cheers to Apple users.<br/>
 				Please give me all the feedback you want!
 			  </div>
 			  <div class="row text-center">
@@ -224,138 +231,6 @@ Please enjoy, and feel free to give any feedback.
 		  </div>
 		</section>
 		</span>
-		<span data-obi= "chapterGames">
-		<section class="page-section" id="game">
-		  <div class="container">
-			  <h1 class="section-heading text-uppercase">Games</h1>
-			  <div class="section-subheading text-muted">
-				Find here my games projects, try them all you want.<br/>
-				Then you can tell me what you thought about them but do not forget to enjoy yourself here!<br/>
-				You can also find them on my page <a href="https://shagar220.itch.io/" target="_blank">itch.io</a>
-			  </div>
-			  <div class="row text-center">
-				<!--
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#Reminiscence"><div class="Bckgrd">					
-						<img src="assets/img/icons/reminiscence.png" alt="Reminiscence"> 
-						</div>
-						<div class="overlay">
-						<h1 class="title">Reminiscence</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#BM"><div class="Bckgrd">					
-						<img src="assets/img/icons/BM.png" alt="Bumpy Monsters"> <!-image from https://craftpix.net/freebies/free-monster-2d-game-items/ ->
-						</div>
-						<div class="overlay">
-						<h1 class="title">Bumpy Monsters</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#BattleArena"><div class="Bckgrd">					
-						<img src="assets/img/icons/BATGS.png" alt="Battle Arena: The Game Show!">
-						</div>
-						<div class="overlay">
-						<h1 class="title">Battle Arena: The Game Show!</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#SpaceMedieval"><div class="Bckgrd">					
-						<img src="assets/img/icons/SM.png" alt="Space Medieval">
-						</div>
-						<div class="overlay">
-						<h1 class="title">Space Medieval</h1>
-					</div></a>
-				</div>
-			-->
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#Squary"><div class="Bckgrd">					
-						<img src="assets/img/icons/Logo_squaryProto.png" alt="Squary prototype"> <!--image from https://pixelbuddha.net/ on https://www.iconfinder.com -->
-						</div>
-						<div class="overlay">
-						<h1 class="title">Squary</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#BlobQueen"><div class="Bckgrd">					
-						<img src="assets/img/icons/BlobQueen.png" alt="A Blob Queen's Adventure">
-						</div>
-						<div class="overlay">
-						<h1 class="title">A Blob Queen's Adventure</h1> 
-					</div></a> 
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#Potion"><div class="Bckgrd">					
-						<img src="assets/img/icons/TPSIcon.png" alt="The Potion Seller">
-						</div>
-						<div class="overlay">
-						<h1 class="title">The Potion Seller</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#ATF"><div class="Bckgrd">					
-						<img src="assets/img/icons/ATF.png" alt="After The Fall">
-						</div>
-						<div class="overlay">
-						<h1 class="title">After the Fall</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#Bureaucrater"><div class="Bckgrd">					
-						<img src="assets/img/icons/BureaucratIcon.png" alt="Bureaucrater">
-						</div>
-						<div class="overlay">
-						<h1 class="title">Bureaucratère</h1>
-					</div></a>
-				</div>
-				<div class="entry col-3">　
-					<a class="trigger_popup" href="#Lich"><div class="Bckgrd">					
-						<img src="assets/img/icons/Lich.png" alt="Lich Evaluation">
-						</div>
-						<div class="overlay">
-						<h1 class="title">The Lich's Evaluation</h1>
-					</div></a>
-				</div>
-			  </div>
-		  </div>
-		</section>
-		</span>
-		<span data-obi= "chapterDraw">
-		<section class="page-section" id="draw">
-		  <div class="container">
-			  <h1 class="section-heading text-uppercase">Drawings</h1>
-			  <div class="section-subheading text-muted">
-				Made with a pen or pencil, from a model.
-			  </div>
-			  <div class="row text-center">
-				<div class="entry col-1">　
-					<a><div class="Bckgrd">					
-						<img src="assets/img/drawings/LookOfSand.png" alt="LookOfSand"> 
-						</div>
-						<div class="overlay">
-						<h1 class="title">Look of Sand</h1>
-					</div></a>
-				</div>
-				<div class="entry col-1">　
-					<a><div class="Bckgrd">					
-						<img src="assets/img/drawings/WildWarrior.png" alt="WildWarrior">
-						</div>
-						<div class="overlay">
-						<h1 class="title">Wild Warrior</h1>
-					</div></a>
-				</div>
-				<div class="entry col-1">　
-					<a><div class="Bckgrd">					
-						<img src="assets/img/drawings/RoughFlower.png" alt="RoughFlower">
-						</div>
-						<div class="overlay">
-						<h1 class="title">Rough Flower</h1>
-					</div></a>
-				</div>
-			  </div>
-		  </div>
-		</section>
-		</span>
 		<span data-obi= "moi">
 		<section class="page-section" id="self">
 		  <div class="container">
@@ -363,18 +238,23 @@ Please enjoy, and feel free to give any feedback.
 			  <div class="section-subheading text-muted">
 				Let's drop the mask, shall we?<br/>
 				<br/>
-				My name is Sylvain Gaborit, I am a French developer, <t data-o = "hobby" class="on">dreaming</t> of becoming the inventor of the first full-dive video game.<br/>
-				And save polar bears, penguins, glaciers and all forests by making mankind's way of living nature friendly.<br/>
+				I'm <b>Sylvain Gaborit</b>, a French developer with a <t data-o = "hobby" class="on">dream</t>: to craft the world's first full-dive video game.<br/>
+				My mission is to harmonize technology with nature, aiming to preserve our planet's marvels. Polar bears, penguins, and glaciers included.<br/>
 				<br/>
-				On internet I might be known as Shagar.<br/>
-				It might sound offensive for english speakers but I can assure you it is not.<br/>
-				Obviously there is a story behind this pseudo and I would gladly explain it around a cup of tea.<br/>
-				
+				With almost three years under my belt as a software engineer, I've turned my talents to the game development realm.<br/>
+				I thrive on <u>math challenges</u>, <u>architecting code</u>, and <u>searching ways to bring abstract concept to concrete solution</u>.<br/>
+				Thus, I'm moving toward <b>Gameplay Programming</b>, <b>Tool Programming</b>, and <b>AI Programming</b>.<br/>
+				<br/>
+				Currently, I'm honing my skills through Prototypes and Proof of Concepts, and maybe pushing one until commercialisation.<br/>
+				<br/>
+				Online, you may know me as <b>Shagar</b>. Curious? It's a tale I'd love to share over tea.<br/>
+				<br/>
+				Discover my journey through code and pixels on this website and my other <a class="trigger_pusle_box" href="javascript:">links</a>.
 			  </div>
 		</section>
 		</span>
 		<span data-obi= "hobby">
-		<section class="page-section" id="other">
+		<section class="page-section" id="hobby">
 		  <div class="container">
 			  <h1 class="section-heading text-uppercase">My hobbies</h1>
 			  <div class="section-subheading text-muted">
@@ -384,49 +264,49 @@ Please enjoy, and feel free to give any feedback.
 				Resize each image is simpler than piloting everything from code apparently.
 			  -->
 			  <div class="row text-center">
-				<div class="entry col-1 stretch">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Climb"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Escalade1.jpg" alt="Shoes">
+						<img src="assets/img/pictures/Escalade1_recadre.png" alt="Shoes">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Climbing</h1>
 					</div></a>
 				</div>
-				<div class="entry col-1 stretch">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Hike"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Rando1.jpg" alt="Landscape">
+						<img src="assets/img/pictures/Rando1_recadre.png" alt="Landscape">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Hiking</h1>
 					</div></a>
 				</div>
-				<div class="entry col-1">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Travel"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Voyage1.jpg" alt="Elephants">
+						<img src="assets/img/pictures/Voyage1_recadre.png" alt="Elephants">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Traveling</h1>
 					</div></a>
 				</div>
-				<div class="entry col-1">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Books"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Livres1.jpg" alt="Books">
+						<img src="assets/img/pictures/Livres1_recadre.png" alt="Books">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Reading</h1>
 					</div></a>
 				</div>
-				<div class="entry col-1">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Games"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Jeux1.jpg" alt="Statue">
+						<img src="assets/img/pictures/Jeux1_recadre.png" alt="Statue">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Gaming</h1>
 					</div></a>
 				</div>
-				<div class="entry col-1">　
+				<div class="entry col-3">　
 					<a class="trigger_popup" href="#Languages"><div class="Bckgrd">	
-						<img src="assets/img/pictures/Langues1.jpg" alt="Earth">
+						<img src="assets/img/pictures/Langues1_recadre.png" alt="Earth">
 						</div>
 						<div class="overlay">
 						<h1 class="title">Speaking</h1>
@@ -466,43 +346,6 @@ Please enjoy, and feel free to give any feedback.
 				</div>
 			</div>
 		</div>
-		<div class="popup" id="Reminiscence">
-			<span class="helper"></span>
-			<div>
-				<div class="popup-header">
-				Reminiscence
-				</div>
-				<div class="popup-body">
-				<br/>
-				<br/>
-				<h3>A game project for the Artem Game Lab.<br/>Made in a colaboration beetween Ecole des Mines de Nancy and Ecole d'art et de design de Nancy<br/>FRENCH ONLY</h3><br/><br/>
-				Réminiscence est une promenade onirique et contemplative dans les souvenirs conservés par un cerveau humain.<br/>
-				Le joueur se promène dans trois univers différents, liés à chaque âge de la vie.<br/>
-				<br/>
-				<pic><img src="assets/img/pictures/ScreenReminiscence1.png" alt="Screen Reminiscence"></pic>
-				<br/>
-				<br/>
-				<h3>Authors:</h3><br/>
-				Briant Emilien<br/>
-				Collignon Héloïse<br/>
-				Didier Paul<br/>
-				Felten Renaud<br/>
-				Gaborit Sylvain<br/>
-				Le Berre Guillaume<br/>
-				Lee Caroline<br/>
-				Munich Amélie<br/>
-				Tabouret Florian<br/>
-				<br/>
-				<br/>
-				<div class = "popup-link">
-					<a href="http://game-lab.alliance-artem.fr/reminiscence"  target="_blank">DOWNLOAD ON THE ARTEM GAME LAB PAGE</a>
-				</div>
-				<br/>
-				<br/>
-				For Windows, just unzip the file and run the .exe
-				</div>
-			</div>
-		</div>
 		<div class="popup" id="Squary">
 			<span class="helper"></span>
 			<div>
@@ -529,63 +372,6 @@ Please enjoy, and feel free to give any feedback.
 				<br/>
 				<br/>
 				To play, just unzip the file and run the .exe
-				</div>
-			</div>
-		</div>
-		<div class="popup" id="BM">
-			<span class="helper"></span>
-			<div>
-				<div class="popup-header">
-				Bumpy Monsters
-				</div>
-				<div class="popup-body">
-				<br/>
-				<br/>
-				<h3>A little game for Android or Windows.</h3><br/><br/>
-				Don't let the monsters touch each other until the count down finishes.<br/><br/>
-				This game was made following the tutorial on this <a href="https://www.youtube.com/c/Blackthornprod/featured"  target="_blank">youtube channel</a>.<br/>
-				And the monster sprites are coming from <a href="https://craftpix.net/freebies/free-monster-2d-game-items/"  target="_blank">here</a>.<br/>
-				<br/>
-				<pic><img src="assets/img/pictures/ScreenBM1.png" alt="Screen BumpyMonsters"></pic>
-				<br/>
-				<br/>
-				<br/>
-				<div class = "popup-link">
-					<a href="https://github.com/Shagar-Den/Shagar-Den.github.io/releases/download/v1.1.0/BumpyMonsters.apk" download="BumpyMonsters.apk">DOWNLOAD FOR ANDROID</a><br/>
-					<a href="https://github.com/Shagar-Den/Shagar-Den.github.io/releases/download/v1.1.0/BumpyMonsters.zip" download="BumpyMonsters.zip">DOWNLOAD FOR WINDOWS</a>
-				</div>
-				<br/>
-				<br/>
-				If you have trouble installing for Android, try following the guide on the "Applications" chapter.<br/>
-				For Windows, just unzip the file and run the .exe
-				</div>
-			</div>
-		</div>
-		<div class="popup" id="BattleArena">
-			<span class="helper"></span>
-			<div>
-				<div class="popup-header">
-				Battle Arena: The GAME Show!
-				</div>
-				<div class="popup-body">
-				<br/>
-				<br/>
-				<h3>A game developped for the Beginners Circle Jam #4<br/>Jam Theme: Game Show<br/>Made from November 27th 2020 at 6:00 AM to December 11th at 6:00 AM<br/>
-				Find more <a href="https://itch.io/jam/beginners-circle-jam-4" target="_blank">here</a>.</h3><br/><br/>
-				You are a contestant in a TV show that seems like a gladiators' fight. Will you manage to get the spectators good votes and get a boost in speed, damage, health,... or will your performance not satisfy them and will have more and more obstacles in your battles?<br/>
-				Try to get the 1 Million Canadian dollar price (hm... not for real), and beware of the Presenter.<br/>
-				<br/>
-				<pic><img src="assets/img/pictures/ScreenBattleArena1.png" alt="Screen BattleArena"></pic>
-				<br/>
-				<br/>
-				<br/>
-				<div class = "popup-link">
-				<a href="https://github.com/Shagar-Den/Shagar-Den.github.io/releases/download/v1.1.0/BattleArenaDesktop.zip" download="BattleArenaDesktop.zip">DOWNLOAD FOR WINDOWS</a><br/>
-				<a href="https://shagar220.itch.io/battle-arena-the-game-show" target="_blank">SEE IT ON ITCH.IO</a>
-				</div>
-				<br/>
-				<br/>
-				For Windows, just unzip the file and run the .exe
 				</div>
 			</div>
 		</div>
@@ -664,30 +450,6 @@ Please enjoy, and feel free to give any feedback.
 				</div>
 			</div>
 		</div>
-		<div class="popup" id="SpaceMedieval">
-			<span class="helper"></span>
-			<div>
-				<div class="popup-header">
-				Space Medieval
-				</div>
-				<div class="popup-body">
-				<br/>
-				<br/>
-				<h3>A prototype to learn how to prototype<br/>Assets are from different sources, the code and design are by myself<br/>I want to iterate and get to the point where the game could be shipped on Steam</h3><br/><br/>
-				The theme idea was born from a discussion between bright people and myself: to mix medieval and space opera.<br/>
-				For now this prototype displays only the first part in a medieval like world where you control a person in charge of the investigation concerning the recent volcano activities and the discovery of a cave underground.<br/>
-				<br/>
-				<pic><img src="assets/img/pictures/SMScreen.png" alt="Space Medieval"></pic>
-				<br/>
-				<br/>
-				<br/>
-				<div class = "popup-link">
-				<a href="https://shagar220.itch.io/space-medieval" target="_blank">SEE IT ON ITCH.IO</a>
-				</div>
-				<br/>
-				</div>
-			</div>
-		</div>
 		<div class="popup" id="Bureaucrater">
 			<span class="helper"></span>
 			<div>
@@ -697,7 +459,7 @@ Please enjoy, and feel free to give any feedback.
 					<div class="popup-body">
 					<br/>
 					<br/>
-					<h3>A game created for the Scientific Game Jam 2023 [FRENCH]<br/>Le thème a été donné par le doctorant de notre équipe: Les lois lunaires<br/>Fait du 31/03/23 à 17h au 02/04/23 à 16h30<br/>
+					<h3>A game created for the Scientific Game Jam 2023<br/>[FRENCH]<br/>Le thème a été donné par le doctorant de notre équipe: Les lois lunaires<br/>Fait du 31/03/23 à 17h au 02/04/23 à 16h30<br/>
 					Par <a href="https://matote.itch.io/" target="_blank">Charlotte COURTOIS</a>, <a href="https://www.artstation.com/jocelyn_aubert" target="_blank">Jocelyn AUBERT</a>, 
 					<a href="https://komasami-music.com/" target="_blank">Masami KOMURO</a>, <a href="https://www.linkedin.com/in/ounissa-sellou" target="_blank">Ounissa SELLOU</a>, 
 					<a href="https://www.linkedin.com/in/alexandre-chazelle-88b066212/" target="_blank">Alexandre CHAZELLE</a>, <a href="https://matote.itch.io/" target="_blank">Matteo ALBASINI</a> et moi-même<br/>

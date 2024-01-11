@@ -45,6 +45,7 @@
     var hasSeenTrick = true;
     var startHint = false;
     var firstTime = true;
+    var pulseCalled = false;
 
 	//this is the bit of code that makes the whole opening and closing text thing work.
 	  $('t[data-o]').click(function(e) {
@@ -53,39 +54,52 @@
         e.preventDefault();
 		
 		if($(this).attr('class') == "on"){
-			var openedby = $(this).attr('data-o');
-			var closedby = $(this).attr('data-c');
+			var openedby = $(this).attr('data-o');//.split(',');
+			//var closedby = $(this).attr('data-c');//.split(',');
+            var openedbyArr = openedby.split(',');
+            //var closedbyArr = closedby.split(',');
 			
 			$(this).removeClass('on').addClass('off');
-			
-			if($('[data-ob="' + openedby +'"]').length !== 0){
-				$('[data-ob="' + openedby +'"]').removeClass('off').addClass('on');
-			}
-			if($('[data-obu="' + openedby +'"]').length !== 0){
-				$('[data-obu="' + openedby +'"]').removeClass('off').addClass('on');
-			}
-			if($('[data-obi="' + openedby +'"]').length !== 0){
-				$('[data-obi="' + openedby +'"]').removeClass('off').addClass('on');
-				$("html, body").animate(
-					{
-						scrollTop: $('[data-obi="' + openedby +'"]').offset().top - 72,
-					},
-					1000,
-					"easeInOutExpo"
-				);
+
+           //console.log(openedby);
+           //console.log(openedbyArr);
+
+           openedbyArr.forEach(function(ob) {
+                //console.log(ob);
+                if($('[data-ob="' + ob +'"]').length !== 0){
+                    $('[data-ob="' + ob +'"]').removeClass('off').addClass('on');
+                }
+                if($('[data-obu="' + ob +'"]').length !== 0){
+                    $('[data-obu="' + ob +'"]').removeClass('off').addClass('on');
+                }    
+                
+                if($('[data-obi="' + ob +'"]').length !== 0){
+                    $('[data-obi="' + ob +'"]').removeClass('off').addClass('on');
+                }
+                
+        
+                if($('[id="' + ob +'-hint"]').length !== 0){
+                    $('[id="' + ob +'-hint"]').removeClass('on').addClass('off');
+                    hasSeenTrick = true;
+                    startHint = false;
+                    firstTime = false;
+                }
+
+                if($('[data-cb="' + ob +'"]').length !== 0){
+                    $('[data-cb="' + ob +'"]').removeClass('on').addClass('off');
+                }
+            });
+
+            if($('[data-obi="' + openedbyArr[0] +'"]').length !== 0){
+                $("html, body").animate(
+                    {
+                        scrollTop: $('[data-obi="' + openedbyArr[0] +'"]').offset().top - 72,
+                    },
+                    1000,
+                    "easeInOutExpo"
+                );
             }
-            if($('[id="' +openedby +'-hint"]').length !== 0){
-                $('[id="' +openedby +'-hint"]').removeClass('on').addClass('off');
-                hasSeenTrick = true;
-                startHint = false;
-                firstTime = false;
-			}
-			
-			
-			if($('[data-cb="' + closedby +'"]').length !== 0){
-				$('[data-cb="' + closedby +'"]').remove();
-			}
-			
+
 			update();
 		}
 		
@@ -124,6 +138,13 @@
 	  $('.show_all').click(function() {
 		$('[data-ob]').removeClass('off').addClass('on');
 		$('[data-obi]').removeClass('off').addClass('on');
+        $('[data-obu]').removeClass('off').addClass('on');
+        $('[data-cb]').removeClass('on').addClass('off');
+		$('t[data-o]').removeClass('on').addClass('off');
+        $("#first-hint").removeClass('on').addClass('off');
+        hasSeenTrick = true;
+        startHint = false;
+        firstTime = false;
 		cheatOnProgress();
 	  });
 	  
@@ -182,6 +203,42 @@
 				$("#UnityImg").attr("src", "assets/img/logos/unity-mwu-black.png");
 			}
         });
+
+
+        //This function is to make social box pulse on click
+		$(".trigger_pusle_box").click(function(){
+            //console.log("before adding class");
+            if(!pulseCalled){
+                pulseCalled = true;
+                document.getElementById("socialBox").classList.add("pulse-box");
+                removeClassAfterDelay(2000,"socialBox","pulse-box");
+            };
+        });
+
+        function resolveAfterNSeconds(delay) {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve("finished");
+              }, delay);
+            });
+        }
+
+        async function removeClassAfterDelay(delay,idName,className){
+            try {
+                await resolveAfterNSeconds(delay);
+                pulseCalled=false;
+                const element = document.getElementById(idName);
+                if (element) {
+                    element.classList.remove(className);
+                    //console.log("After removing class " + idName + ": " + className);
+                } else {
+                    console.log("Element with id '" + idName + "' was not found.");
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        }
+
 		
 		function update(){
             progressI++;
@@ -189,14 +246,31 @@
 				var percentI = progressI/totalDiscover;
 				move(Math.round(percentI*100));
 			}
-            /*if(progressI==2 && !state.FirstStepMedal && !fromCheat){
-                state.FirstStepMedal = true;
-                save();
+            if(progressI==1){
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-dark');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
             }
-            if(progressI==totalDiscover && !state.ExplorerMedal && !fromCheat){
-                state.ExplorerMedal = true;
-                save();
-            }*/
+            else if(progressI==totalDiscover){
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-dark');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
+            }
+            else{
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('show_all');
+                document.getElementById("showButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.remove('btn-disabled');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('hide_all');
+                document.getElementById("hideButt").getElementsByClassName("btn-text")[0].classList.add('btn-dark');
+            }
+            
             UpdateAchievements();
 		}
 		function resetProgress(){
